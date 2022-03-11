@@ -19,14 +19,10 @@ const Login = () => {
     const handleLogin = (e) => {
         e.preventDefault()
 
-        console.log("*** Initiate authentication ***")
-
         login(credentials)
             .then(res => {
                 if ("valid" in res && res.valid && "token" in res) {
-                    debugger
                     localStorage.setItem("ace__token", res.token)
-                    console.log("*** Authenticated! ***")
                     history.push("/")
                 }
                 else {
@@ -73,7 +69,6 @@ const Login = () => {
                         </button>
                     </fieldset>
                 </form>
-
             </section>
 
             <section className="appLogo">

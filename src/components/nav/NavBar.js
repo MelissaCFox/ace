@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link} from "react-router-dom"
 import useSimpleAuth from "../../repositories/useSimpleAuth";
 
 import './NavBar.css';
@@ -8,7 +8,7 @@ import { useHistory } from "react-router-dom";
 
 
 export const NavBar = () => {
-    const { isAuthenticated, logout } = useSimpleAuth()
+    const { isAuthenticated, logout} = useSimpleAuth()
     const history = useHistory()
 
 
@@ -20,24 +20,24 @@ export const NavBar = () => {
                 </button>
                 <div id="navbarNavDropdown" className="navbar-collapse collapse header">
                     <ul className="navbar-nav mr-auto appLogo">
-                        <button onClick={() => { }}>
+                        <button onClick={() => {}}>
                             <img src={AceLogo} alt="Ace Logo" className="appLogo-btn" />
                         </button>
                     </ul>
                     <div className="navbar-nav-links">
 
-                        {
-
-                        }
-
                         <ul className="navbar-nav logout">
                             <li className="nav-item dropdown">
-                                <div className="logout-btn"><button className="nav-link logout-btn" onClick={() => {
-                                    logout()
-                                    history.push("/login")
-                                }}><div className="logout-btn">Logout</div></button></div>
-
+                                {
+                                    isAuthenticated()
+                                        ? <div className="logout-btn"><button className="nav-link logout-btn" onClick={() => {
+                                            logout()
+                                            history.push("/login")
+                                        }}><div className="logout-btn">Logout</div></button></div>
+                                        : <Link className="nav-link" to="/login">Login</Link>
+                                }
                             </li>
+
                         </ul>
 
                     </div>

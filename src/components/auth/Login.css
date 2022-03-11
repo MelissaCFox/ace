@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Modak&family=Readex+Pro:wght@200;400;700&display=swap');
+
+.form--login {
+    display: inline-block;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.form--login > fieldset > input[type="email"],
+.form--login > fieldset > input[type="password"] {
+    width: 25em;
+}
+
+input[name="remember"] {
+    margin: 1em 0.5em 0 0;
+}
+
+.link--register {
+    margin-top: 2rem;
+    color:#ECDBBA; 
+
+}
+
+.container--login {
+    padding: 5rem;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin-top: -5rem;
+    color:#ECDBBA; 
+    font-family: "Readex Pro"
+}
+
+#appName {
+    font-family: "Modak";
+    font-size: 5rem;
+}
+
+.form-container {
+    flex: 0.6;
+    padding-left: 15rem;
+    padding-top: 8rem;
+
+}
+
+#login-logo {
+    padding-left: 8rem;
+    height: 40rem;
+    justify-self: center;
+
+}

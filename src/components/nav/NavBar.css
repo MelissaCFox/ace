@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Modak&family=Readex+Pro:wght@200;400;700&display=swap');
+
+/* * {
+    border: black solid 1px;
+} */
+
+img {
+    height: 6rem;
+}
+
+.navbar-nav-links {
+display: flex;
+flex-wrap: wrap;
+flex: 8rem;
+background-color: #191919;
+padding: 0;
+margin-top: -1rem;
+
+}
+
+.name-btn button {
+    background-color: #191919;
+}
+
+.search {
+    padding-top: 0.4rem;
+}
+
+.name {
+    font-family: "Readex Pro";
+    font-size: 2rem;
+    color: #406882;
+}
+
+.logout-btn {
+    background-color: #191919;
+    font-family: "Readex Pro";
+    font-size: 2rem;
+    color: #406882;
+}
+
+.nav-link {
+    padding-top: 0;
+}
+
+#navbarNavDropdown{
+    background-color: #191919;
+}
+
+.container nav {
+    padding: 0;
+    border-bottom: 0.25rem #406882 solid;
+}
+
+.navbar-collapse {
+}
+
+.appLogo button {
+    background-color: #2D4263;
+    padding: 0;
+}
+
+.header {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #2D4263;
+}
+
+.appLogo {
+    flex: 0;
+}
+
+.appLogo-btn {
+    background-color: #191919;
+    padding: 0 2rem 0 2rem;
+}
+
+.search {
+    flex: 1;
+    margin-left: 1rem;
+    
+}
+
+.profile {
+    flex: 3;
+    justify-content: flex-end;
+
+}
+
+.logout {
+    flex: 1;
+    justify-content: center;
+}
+

@@ -1,7 +1,11 @@
 import React from "react"
 import { useEffect } from "react"
 import { useState } from "react"
+import { Route } from "react-router-dom"
 import UserRepository from "../repositories/UserRepository"
+import { AdminHome } from "./Admin/AdminHome"
+import { StudentProfile } from "./Profile/StudentProfile"
+import { Schedule } from "./Tutor/Schedule"
 
 
 export const ApplicationViews = () => {
@@ -18,7 +22,16 @@ export const ApplicationViews = () => {
             <>
 
             <h1>Hello {currentUser.user?.first_name}</h1>
-            <p>You are a {currentUser.user?.is_staff ? "TUTOR" : "STUDENT"}</p>
+
+            <Route path="/" render={() => {
+                if (currentUser.user?.is_superuser) {
+                    return <AdminHome />
+                } else if (currentUser.user?.is_staff) {
+                    return <Schedule />
+                } else {
+                    return <StudentProfile />
+                }
+            }} />
 
 
             </>

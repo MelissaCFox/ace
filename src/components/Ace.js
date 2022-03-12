@@ -1,15 +1,16 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Route, Redirect } from "react-router-dom"
 import Login from "./auth/Login"
 import {ApplicationViews} from "./ApplicationViews"
 import useSimpleAuth from "../repositories/useSimpleAuth"
 import { NavBar } from "./nav/NavBar"
+import UserRepository from "../repositories/UserRepository"
 
 
 export const Ace = () => {
     const { isAuthenticated } = useSimpleAuth()
 
-    return <>
+     return <>
         <Route render={() => {
             if (isAuthenticated()) {
                 return <>

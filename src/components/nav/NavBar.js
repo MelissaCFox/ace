@@ -23,7 +23,7 @@ export const NavBar = () => {
             <nav className="navbar navbar-expand-sm navbar-light bg-light fixed-top onTop">
                 <div id="navbarNavDropdown" className="navbar-collapse collapse header">
                     <ul className="navbar-nav mr-auto appLogo">
-                        <button onClick={() => { }}>
+                        <button onClick={() => {history.push("/")}}>
                             <img src={AceLogo} alt="Ace Logo" className="appLogo-btn" />
                         </button>
                     </ul>

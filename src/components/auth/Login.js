@@ -8,8 +8,7 @@ import "./Login.css"
 const Login = () => {
     const [credentials, syncAuth] = useState({
         username: "",
-        password: "",
-        remember: false
+        password: ""
     })
     const { login } = useSimpleAuth()
     const history = useHistory()

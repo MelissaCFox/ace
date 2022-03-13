@@ -19,6 +19,24 @@ const UserRepository = {
         return await fetchIt(`${Settings.remoteURL}/users/tutors`)
     },
 
+
+    // TutorStudents (aka Pairs)
+    async getPairs() {
+        return await fetchIt(`${Settings.remoteURL}/pairs`)
+    },
+
+    async addPair(pair) {
+        return await fetchIt(`${Settings.remoteURL}/pairs`, "POST", JSON.stringify(pair))
+    },
+
+    async updatePair(id, newPair) {
+        return await fetchIt(`${Settings.remoteURL}/pairs/${id}`, "PUT", JSON.stringify(newPair))
+    },
+
+    async deletePair(id) {
+        return await fetchIt(`${Settings.remoteURL}/pairs/${id}`, "DELETE")
+    },
+
 }
 
 export default UserRepository

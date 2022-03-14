@@ -5,6 +5,8 @@ import { Route } from "react-router-dom"
 import UserRepository from "../repositories/UserRepository"
 import { AdminHome } from "./Admin/AdminHome"
 import { StudentManager } from "./Admin/StudentManager"
+import { TestManager } from "./Admin/TestManager"
+import { TutorManager } from "./Admin/TutorManager"
 import { StudentProfile } from "./Profile/StudentProfile"
 import { Schedule } from "./Tutor/Schedule"
 
@@ -19,8 +21,8 @@ export const ApplicationViews = () => {
     }, [])
 
 
-        return (
-            <>
+    return (
+        <>
 
             <h1>Hello {currentUser.user?.first_name}</h1>
 
@@ -33,13 +35,24 @@ export const ApplicationViews = () => {
                     return <StudentProfile />
                 }
             }} />
+            {
+                currentUser.user?.is_superuser
+                    ? <>
+                        <Route path="/student-manager">
+                            <StudentManager />
+                        </Route>
+                        <Route path="/tutor-manager">
+                            <TutorManager />
+                        </Route>
+                        <Route path="/test-manager">
+                            <TestManager />
+                        </Route>
 
-            <Route path="/student-manager">
-                <StudentManager />
-            </Route>
+                    </>
+                    : ""
+            }
 
-
-            </>
-        )
+        </>
+    )
 
 }

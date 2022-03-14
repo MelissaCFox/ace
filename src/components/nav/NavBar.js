@@ -34,13 +34,13 @@ export const NavBar = () => {
                                 ? currentUser.user?.is_superuser
                                     ? <>
                                         <ul className="navbar-nav">
-                                            <li className="nav-item">Student Manager</li>
+                                            <li className="nav-item"><Link to="/student-manager">Student Manager</Link></li>
                                         </ul>
                                         <ul className="navbar-nav">
-                                            <li className="nav-item">Tutor Manager</li>
+                                            <li className="nav-item"><Link to="tutor-manager">Tutor Manager</Link></li>
                                         </ul>
                                         <ul className="navbar-nav">
-                                            <li className="nav-item">Test Manager</li>
+                                            <li className="nav-item"><Link to="test-manager">Test Manager</Link></li>
                                         </ul>
                                     </>
 

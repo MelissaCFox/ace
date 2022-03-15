@@ -20,7 +20,7 @@ const TestRepository = {
     },
 
     async delete(id) {
-        return await fetchIt(`${Settings.remoteURL}/tests${id}`, "DELETE")
+        return await fetchIt(`${Settings.remoteURL}/tests/${id}`, "DELETE")
     },
 
 }

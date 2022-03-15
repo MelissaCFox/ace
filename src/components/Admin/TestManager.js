@@ -10,12 +10,11 @@ export const TestManager = () => {
     const [tests, setTests] = useState([])
     const [newInfo, setNewInfo] = useState(false)
     const alertNewInfo = () => setNewInfo(!newInfo)
+    const [confirm, setConfirm] = useState(false)
+    const toggleConfirm = () => setConfirm(!confirm)
+    const [testId, setTestId] = useState(0)
 
-    const [newTest, setNewTest] = useState({
-        "name": "",
-        "year": "",
-        "numSci": 0
-    })
+ 
     const [form, setForm] = useState(false)
     const toggleForm = () => setForm(!form)
 
@@ -25,15 +24,13 @@ export const TestManager = () => {
 
     }, [newInfo])
 
-    const handleInputChange = (event) => {
-        const copy = {...newTest}
-        const name = event.target.name
-        if (name === "name") {
-            copy.name = event.target.value
-        } else {
-            copy.name = parseInt(event.target.value)
+    const deleteTest = () => {
+        if (testId) {
+            TestRepository.delete(parseInt(testId)).then(() => {
+                alertNewInfo()
+                toggleConfirm()
+            })
         }
-        setNewTest(copy)
     }
 
     return (<>
@@ -46,7 +43,10 @@ export const TestManager = () => {
                     tests.map((test) => {
                         return <div key={test.id}>
                             {test.name} ({test.year})
-                            <button><Delete /></button>
+                            <button><Delete onClick={() => {
+                                setTestId(test.id)
+                                toggleConfirm()
+                            }} /></button>
                         </div>
                     })
                 }
@@ -60,9 +60,15 @@ export const TestManager = () => {
                 isOpen={form}>
                 <ModalHeader>Add Test</ModalHeader>
                 <ModalBody>
-                    <TestForm toggleForm={toggleForm}/>
+                    <TestForm toggleForm={toggleForm} alertNewInfo={alertNewInfo}/>
                 </ModalBody>
             </Modal>
+
+            <Dialog open={confirm} toggle={toggleConfirm}>
+            Are You Sure?
+            <Button onClick={deleteTest}>Yes, Delete</Button>
+            <Button onClick={toggleConfirm}>Cancel</Button>
+        </Dialog>
 
         </div>
 

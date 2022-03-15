@@ -119,7 +119,8 @@ export const StudentForm = ({edit, alertNewInfo}) => {
                 <InputGroupText className="label">Start Time</InputGroupText>
                 <Input required type="time" className="" name="startTime" onChange={(e) => {
                     const copy = {...student}
-                    copy.parentEmail = e.target.value
+                    let time = e.target.value += ":00"
+                    copy.startTime = time
                     setStudent(copy)
                 }} />
             </InputGroup>
@@ -128,7 +129,8 @@ export const StudentForm = ({edit, alertNewInfo}) => {
                 <InputGroupText className="label">End Time</InputGroupText>
                 <Input required type="time" className="" name="endTime" onChange={(e) => {
                     const copy = {...student}
-                    copy.parentEmail = e.target.value
+                    let time = e.target.value += ":00"
+                    copy.endTime = time
                     setStudent(copy)
                 }} />
             </InputGroup>

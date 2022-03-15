@@ -15,11 +15,6 @@ const useSimpleAuth = () => {
             body: JSON.stringify(user)
         })
         .then(_ => _.json())
-        .then(response => {
-            if ("token" in response) {
-                localStorage.setItem("ace__token", response.token)
-            }
-        })
     }
 
     const login = (user) => {

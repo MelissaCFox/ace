@@ -1,42 +1,69 @@
-import { Button, DialogContent, Input, Radio } from '@material-ui/core';
-import { Delete } from '@material-ui/icons';
+import { Form, InputGroup, InputGroupText, Input, Button } from 'reactstrap';
+
 import React, { useEffect, useState } from "react"
+import { FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
+import TestRepository from '../../repositories/TestRepository';
 
 
-export const TestForm = ({edit, toggleForm}) => {
-    const [newInfo, setNewInfo] = useState(false)
-    const alertNewInfo = () => setNewInfo(!newInfo)
-
+export const TestForm = ({ toggleForm, alertNewInfo }) => {
     const [test, setTest] = useState({
         "name": "",
         "year": "",
         "numSci": 0
     })
 
-    const handleInputChange = (event) => {
-        //! NOT WORKING YET - NEED TO REMEMBER HOW TO USE useRefs for change-handling
-        const copy = { ...test }
-        const name = event.target.name
-        if (name === "name") {
-            copy.name = event.target.value
-        } else {
-            copy.name = parseInt(event.target.value)
+    const addTest = () => {
+        if (test.name && test.year && test.numSci) {
+            TestRepository.add(test).then(() => {
+                alertNewInfo()
+                toggleForm()
+            })
         }
-        setTest(copy)
     }
 
     return (
 
-        <DialogContent className="">
-            <Input className="" type="text" name="name" defaultValue={test.name} placeholder="Name" onChange={handleInputChange}></Input>
-            <Input className="" type="text" name="year" defaultValue={test.year} placeholder="Year" onChange={handleInputChange}></Input>
-            <Radio name="numSci" value="6" color="default" onChange={handleInputChange} />
-            <Radio name="numSci" value="7" color="default" onChange={handleInputChange} />
+        <Form className="">
+            <InputGroup>
+                <InputGroupText>Test Name</InputGroupText>
+                <Input className="" type="text" name="name" defaultValue={test.name} placeholder="Name"
+                    onChange={(e) => {
+                        const copy = { ...test }
+                        copy.name = e.target.value
+                        setTest(copy)
+                    }}>
+                </Input>
+            </InputGroup>
+            <InputGroup>
+                <InputGroupText>Test Year</InputGroupText>
+                <Input className="" type="text" name="year" defaultValue={test.year} placeholder="Year"
+                    onChange={(e) => {
+                        const copy = { ...test }
+                        copy.year = parseInt(e.target.value)
+                        setTest(copy)
+                    }}>
+                </Input>
+            </InputGroup>
+
+            <InputGroup>
+                <InputGroupText>Num Science Sections</InputGroupText>
+                <RadioGroup row aria-labelledby="demo-row-radio-buttons-group-label" name="row-radio-buttons-group"
+                    onChange={(e) => {
+                        const copy = { ...test }
+                        copy.numSci = parseInt(e.target.value)
+                        setTest(copy)
+                    }}>
+                    <FormControlLabel value="6" control={<Radio />} label="6" />
+                    <FormControlLabel value="7" control={<Radio />} label="7" />
+                </RadioGroup>
+
+            </InputGroup>
+
             <div className="">
-                <div className=""><Button className="" variant="outlined" onClick={() => { }}>{edit? "Update" : "Add"}</Button></div>
+                <div className=""><Button className="" variant="outlined" onClick={addTest}>Add</Button></div>
                 <div className=""><Button className="" variant="outlined" onClick={toggleForm}>Cancel</Button></div>
             </div>
-        </DialogContent>
+        </Form>
 
 
     )

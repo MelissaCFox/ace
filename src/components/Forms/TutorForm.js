@@ -122,7 +122,7 @@ export const TutorForm = ({ edit, alertNewInfo, toggleForm }) => {
             </InputGroup>
 
 
-            <Button type="submit" onClick={saveTutor}>{edit ? "Update" : "Register"}</Button>
+            <Button type="submit" onClick={saveTutor}>{edit.user ? "Update" : "Register"}</Button>
             {
                 edit.user
                     ? <>

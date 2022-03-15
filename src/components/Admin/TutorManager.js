@@ -47,7 +47,10 @@ export const TutorManager = () => {
     return (<>
         <div className="container">
 
-            <Button onClick={toggleForm}>Register New Tutor</Button>
+            <Button onClick={() => {
+                setTutorToEdit({})
+                toggleForm()
+            }}>Register New Tutor</Button>
 
             <Input type="search" placeholder="Search" onChange={search} />
 

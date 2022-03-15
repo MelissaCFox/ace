@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import UserRepository from "../../repositories/UserRepository"
 import { TutorForm } from '../Forms/TutorForm';
-import { Modal, ModalBody, ModalHeader } from 'reactstrap';
+import { Input, Modal, ModalBody, ModalHeader } from 'reactstrap';
 
 export const TutorManager = () => {
     const [allTutors, setAllTutors] = useState([])
@@ -18,8 +18,8 @@ export const TutorManager = () => {
 
     useEffect(() => {
         UserRepository.getTutors().then(r => {
-            setAllTutors(r.filter(t => !t.user?.is_superuser))
-            setTutors(r.filter(t => !t.user?.is_superuser))
+            setAllTutors(r)
+            setTutors(r)
         })
 
     }, [newInfo])
@@ -34,10 +34,22 @@ export const TutorManager = () => {
         setTutors(tutors)
     }
 
+    const search = (event) => {
+        const term = event.target.value
+        let tutors = [... allTutors]
+        if (term === "") {
+            setTutors(tutors)
+        } else {
+            UserRepository.searchTutors(term).then(setTutors)
+        }
+    }
+
     return (<>
         <div className="container">
 
             <Button onClick={toggleForm}>Register New Tutor</Button>
+
+            <Input type="search" placeholder="Search" onChange={search} />
 
             <select onChange={filterTutors}>
                 <option value="">All</option>

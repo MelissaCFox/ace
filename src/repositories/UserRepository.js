@@ -27,6 +27,10 @@ const UserRepository = {
         return await fetchIt(`${Settings.remoteURL}/users/${id}/activate`, "PUT")
     },
 
+    async searchTutors(term) {
+        return await fetchIt(`${Settings.remoteURL}/users/tutors?q=${term}`)
+    },
+
 
     // TutorStudents (aka Pairs)
     async getPairs() {
@@ -44,6 +48,7 @@ const UserRepository = {
     async deletePair(id) {
         return await fetchIt(`${Settings.remoteURL}/pairs/${id}`, "DELETE")
     },
+
 
     // Days
     async getDays() {

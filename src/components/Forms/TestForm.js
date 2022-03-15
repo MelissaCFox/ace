@@ -3,7 +3,7 @@ import { Delete } from '@material-ui/icons';
 import React, { useEffect, useState } from "react"
 
 
-export const TestForm = ({edit}) => {
+export const TestForm = ({edit, toggleForm}) => {
     const [newInfo, setNewInfo] = useState(false)
     const alertNewInfo = () => setNewInfo(!newInfo)
 

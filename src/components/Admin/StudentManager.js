@@ -1,7 +1,6 @@
 import { Button } from '@material-ui/core';
 import { Settings } from '@material-ui/icons';
 import React, { useEffect, useState } from "react"
-import { Dialog, DialogContent, DialogTitle } from '@material-ui/core';
 import { Link } from "react-router-dom"
 import UserRepository from "../../repositories/UserRepository"
 import { StudentForm } from '../Forms/StudentForm';
@@ -12,6 +11,7 @@ export const StudentManager = () => {
     const [students, setStudents] = useState([])
     const [tutors, setTutors] = useState([])
     const [pairs, setPairs] = useState([])
+    const [filter, setFilter] = useState("")
 
     const [form, setForm] = useState(false)
     const toggleForm = () => setForm(!form)
@@ -24,21 +24,26 @@ export const StudentManager = () => {
     useEffect(() => {
         UserRepository.getStudents().then(r => {
             setAllStudents(r)
-            setStudents(r)
-        })
+            if (filter) {
+                filterStudents()
+            } else {
+                setStudents(r)
+            }
+         })
         UserRepository.getTutors().then((r) => setTutors(r.filter(tutor => !tutor.user.is_superuser)))
         UserRepository.getPairs().then(setPairs)
     }, [newInfo])
 
-    const filterStudents = (event) => {
+
+    const filterStudents = () => {
         let students = [...allStudents]
-        if (event.target.value === "unassigned") {
+        if (filter === "unassigned") {
             students = students.filter(student => student.unassigned === true)
-        } else if (event.target.value === "assigned") {
+        } else if (filter === "assigned") {
             students = students.filter(student => student.unassigned === false)
-        } else if (event.target.value === "active") {
+        } else if (filter === "active") {
             students = students.filter(student => student.user?.is_active === true)
-        } else if (event.target.value === "inactive") {
+        } else if (filter === "inactive") {
             students = students.filter(student => student.user?.is_active === false)
         }
         setStudents(students)
@@ -65,9 +70,15 @@ export const StudentManager = () => {
     return (<>
         <div className="container">
 
-            <Button onClick={toggleForm}>Register New Student</Button>
+            <Button onClick={() => {
+                setStudentToEdit({})
+                toggleForm()
+                }}>Register New Student</Button>
 
-            <select onChange={filterStudents}>
+            <select onChange={(e) => {
+                setFilter(e.target.value)
+                filterStudents()
+                }}>
                 <option value="">All</option>
                 <option value="assigned">Assigned</option>
                 <option value="unassigned">Unassigned</option>
@@ -81,7 +92,10 @@ export const StudentManager = () => {
                     students.map((student) => {
                         return <div key={student.id}>
                             <Link to={`student/${student.id}`}>{student.user.first_name}</Link> {student.unassigned ? " - NOT ASSIGNED" : ""}
-                            <button><Settings /></button>
+                            <button><Settings onClick={() => {
+                                setStudentToEdit(student)
+                                toggleForm()
+                            }} /></button>
                             <select defaultValue={student.tutor_id} onChange={e => assignTutor(student.id, e.target.value)}>
                                 <option value="0">Assign Tutor</option>
                                 {
@@ -92,16 +106,16 @@ export const StudentManager = () => {
                     })
                 }
             </div>
-            
+
             <Modal animation="false"
                 centered
                 fullscreen="md"
                 size="md"
                 toggle={toggleForm}
                 isOpen={form}>
-                <ModalHeader>{studentToEdit.firstName ? "Update" : "Add"} Student</ModalHeader>
+                <ModalHeader>{studentToEdit?.user?.first_name ? `${studentToEdit?.user?.first_name} ${studentToEdit?.user?.last_name}` : "Add Student"}</ModalHeader>
                 <ModalBody>
-                    <StudentForm />
+                    <StudentForm edit={studentToEdit} alertNewInfo={alertNewInfo} toggleForm={toggleForm}/>
                 </ModalBody>
             </Modal>
 

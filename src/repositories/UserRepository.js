@@ -19,6 +19,14 @@ const UserRepository = {
         return await fetchIt(`${Settings.remoteURL}/users/tutors`)
     },
 
+    async update(id, user) {
+        return await fetchIt(`${Settings.remoteURL}/users/${id}`, "PUT", JSON.stringify(user))
+    },
+
+    async activate(id) {
+        return await fetchIt(`${Settings.remoteURL}/users/${id}/activate`, "PUT")
+    },
+
 
     // TutorStudents (aka Pairs)
     async getPairs() {

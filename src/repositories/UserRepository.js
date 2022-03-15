@@ -37,6 +37,11 @@ const UserRepository = {
         return await fetchIt(`${Settings.remoteURL}/pairs/${id}`, "DELETE")
     },
 
+    // Days
+    async getDays() {
+        return await fetchIt(`${Settings.remoteURL}/days`)
+    },
+
 }
 
 export default UserRepository

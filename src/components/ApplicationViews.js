@@ -22,7 +22,7 @@ export const ApplicationViews = () => {
 
 
     return (
-        <>
+        <div className="main-container">
 
             <h1>Hello {currentUser.user?.first_name}</h1>
 
@@ -52,7 +52,7 @@ export const ApplicationViews = () => {
                     : ""
             }
 
-        </>
+        </div>
     )
 
 }

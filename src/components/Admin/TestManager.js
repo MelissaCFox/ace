@@ -2,6 +2,8 @@ import { Button, Dialog, DialogContent, DialogTitle, Input, Radio } from '@mater
 import { Delete } from '@material-ui/icons';
 import React, { useEffect, useState } from "react"
 import TestRepository from '../../repositories/TestRepository';
+import { TestForm } from '../Forms/TestForm';
+import { Modal, ModalBody, ModalHeader } from 'reactstrap';
 
 
 export const TestManager = () => {
@@ -49,24 +51,18 @@ export const TestManager = () => {
                     })
                 }
             </div>
-            <Dialog
-                className=""
-                open={form}
-                onClose={toggleForm}
-            >
-                <DialogTitle className="test-form">Add New Test</DialogTitle>
-                <DialogContent className="">
-                    <Input className="" type="text" name="name" defaultValue={newTest.name} placeholder="Name" onChange={handleInputChange}></Input>
-                    <Input className="" type="text" name="year" defaultValue={newTest.year} placeholder="Year" onChange={handleInputChange}></Input>
-                    <Radio name="numSci" value="6" color="default" onChange={handleInputChange} />
-                    <Radio name="numSci" value="7" color="default" onChange={handleInputChange} />
-                    <div className="">
-                        <div className=""><Button className="" variant="outlined" onClick={() => {}}>Ok</Button></div>
-                        <div className=""><Button className="" variant="outlined" onClick={toggleForm}>Cancel</Button></div>
-                    </div>
-                </DialogContent>
-            </Dialog>
 
+            <Modal animation="false"
+                centered
+                fullscreen="md"
+                size="md"
+                toggle={toggleForm}
+                isOpen={form}>
+                <ModalHeader>Add Test</ModalHeader>
+                <ModalBody>
+                    <TestForm toggleForm={toggleForm}/>
+                </ModalBody>
+            </Modal>
 
         </div>
 

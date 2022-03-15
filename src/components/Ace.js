@@ -2,6 +2,7 @@ import { Route, Redirect } from "react-router-dom"
 import Login from "./auth/Login"
 import {ApplicationViews} from "./ApplicationViews"
 import useSimpleAuth from "../repositories/useSimpleAuth"
+import 'bootstrap/dist/css/bootstrap.min.css'
 import { NavBar } from "./nav/NavBar"
 
 

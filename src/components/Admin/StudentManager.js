@@ -1,16 +1,25 @@
 import { Button } from '@material-ui/core';
 import { Settings } from '@material-ui/icons';
 import React, { useEffect, useState } from "react"
+import { Dialog, DialogContent, DialogTitle } from '@material-ui/core';
 import { Link } from "react-router-dom"
 import UserRepository from "../../repositories/UserRepository"
+import { StudentForm } from '../Forms/StudentForm';
+import { Modal, ModalBody, ModalHeader } from 'reactstrap';
 
 export const StudentManager = () => {
     const [allStudents, setAllStudents] = useState([])
     const [students, setStudents] = useState([])
     const [tutors, setTutors] = useState([])
     const [pairs, setPairs] = useState([])
+
+    const [form, setForm] = useState(false)
+    const toggleForm = () => setForm(!form)
+
     const [newInfo, setNewInfo] = useState(false)
     const alertNewInfo = () => setNewInfo(!newInfo)
+
+    const [studentToEdit, setStudentToEdit] = useState({})
 
     useEffect(() => {
         UserRepository.getStudents().then(r => {
@@ -27,9 +36,9 @@ export const StudentManager = () => {
             students = students.filter(student => student.unassigned === true)
         } else if (event.target.value === "assigned") {
             students = students.filter(student => student.unassigned === false)
-        } else if (event.target.value === "active"){
+        } else if (event.target.value === "active") {
             students = students.filter(student => student.user?.is_active === true)
-        } else if (event.target.value === "inactive"){
+        } else if (event.target.value === "inactive") {
             students = students.filter(student => student.user?.is_active === false)
         }
         setStudents(students)
@@ -56,7 +65,7 @@ export const StudentManager = () => {
     return (<>
         <div className="container">
 
-            <Button>Register New Student</Button>
+            <Button onClick={toggleForm}>Register New Student</Button>
 
             <select onChange={filterStudents}>
                 <option value="">All</option>
@@ -83,6 +92,19 @@ export const StudentManager = () => {
                     })
                 }
             </div>
+            
+            <Modal animation="false"
+                centered
+                fullscreen="md"
+                size="md"
+                toggle={toggleForm}
+                isOpen={form}>
+                <ModalHeader>{studentToEdit.firstName ? "Update" : "Add"} Student</ModalHeader>
+                <ModalBody>
+                    <StudentForm />
+                </ModalBody>
+            </Modal>
+
         </div>
 
     </>)

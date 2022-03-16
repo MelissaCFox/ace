@@ -37,22 +37,22 @@ export const NavBar = () => {
                                             <li className="nav-item"><Link to="/student-manager">Student Manager</Link></li>
                                         </ul>
                                         <ul className="navbar-nav">
-                                            <li className="nav-item"><Link to="tutor-manager">Tutor Manager</Link></li>
+                                            <li className="nav-item"><Link to="/tutor-manager">Tutor Manager</Link></li>
                                         </ul>
                                         <ul className="navbar-nav">
-                                            <li className="nav-item"><Link to="test-manager">Test Manager</Link></li>
+                                            <li className="nav-item"><Link to="/test-manager">Test Manager</Link></li>
                                         </ul>
                                     </>
 
                                     : <>
                                         <ul className="navbar-nav">
-                                            <li className="nav-item">My Students</li>
+                                            <li className="nav-item"><Link to="/students">My Students</Link></li>
                                         </ul>
                                         <ul className="navbar-nav">
-                                            <li className="nav-item">Schedule</li>
+                                            <li className="nav-item"><Link to="/schedule">Schedule</Link></li>
                                         </ul>
                                         <ul className="navbar-nav">
-                                            <li className="nav-item">Profile</li>
+                                            <li className="nav-item"><Link to="/profile">Profile</Link></li>
                                         </ul>
                                     </>
 

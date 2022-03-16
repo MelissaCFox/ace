@@ -5,7 +5,7 @@ import UserRepository from "../../repositories/UserRepository";
 import useSimpleAuth from '../../repositories/useSimpleAuth';
 
 
-export const TutorForm = ({ edit, alertNewInfo, toggleForm }) => {
+export const TutorForm = ({ edit, alertNewInfo, toggleForm, admin }) => {
     const { register } = useSimpleAuth()
     const [confirm, setConfirm] = useState(false)
     const toggleConfirm = () => setConfirm(!confirm)
@@ -124,7 +124,7 @@ export const TutorForm = ({ edit, alertNewInfo, toggleForm }) => {
 
             <Button type="submit" onClick={saveTutor}>{edit.user ? "Update" : "Register"}</Button>
             {
-                edit.user
+                edit.user && admin
                     ? <>
                         <Button onClick={toggleConfirm}>{edit.user?.is_active ? "Deactivate" : "Activate"}</Button>
                         <Dialog open={confirm} toggle={toggleConfirm}>

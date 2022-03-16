@@ -58,10 +58,10 @@ export const NavBar = () => {
 
                                 : <>
                                     <ul className="navbar-nav">
-                                        <li className="nav-item">Profile</li>
+                                    <li className="nav-item"><Link to="/profile">Profile</Link></li>
                                     </ul>
                                     <ul className="navbar-nav">
-                                        <li className="nav-item">Scores</li>
+                                    <li className="nav-item"><Link to="/scores">Scores</Link></li>
                                     </ul>
                                 </>
                         }

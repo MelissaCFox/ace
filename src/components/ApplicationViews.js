@@ -11,6 +11,7 @@ import { StudentProfile } from "./Profile/StudentProfile"
 import { Today } from "./Tutor/Today"
 import { StudentList } from "./Tutor/StudentList"
 import { Schedule } from "./Tutor/Schedule"
+import { TutorProfile } from "./Profile/TutorProfile"
 
 
 export const ApplicationViews = () => {
@@ -59,9 +60,24 @@ export const ApplicationViews = () => {
                     <Route path="/schedule">
                         <Schedule user={currentUser} />
                     </Route>
+                    <Route path="/profile">
+                        <TutorProfile currentUser={currentUser} />
+                    </Route>
                     </>
-                : ""
+                : <>
+                <Route path="/profile">
+                    <StudentProfile user={currentUser} />
+                </Route>
+                </>
             }
+
+            <Route exact path="/tutor/:tutorId(\d+)">
+                <TutorProfile />
+            </Route>
+
+            <Route exact path="/student/:studentId(\d+)">
+                <StudentProfile />
+            </Route>
 
 
         </div>

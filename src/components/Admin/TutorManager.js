@@ -84,7 +84,7 @@ export const TutorManager = () => {
                 isOpen={form}>
                 <ModalHeader>{tutorToEdit?.user?.first_name ? `${tutorToEdit?.user?.first_name} ${tutorToEdit?.user?.last_name}` : "Add Tutor"}</ModalHeader>
                 <ModalBody>
-                    <TutorForm edit={tutorToEdit} alertNewInfo={alertNewInfo} toggleForm={toggleForm}/>
+                    <TutorForm edit={tutorToEdit} alertNewInfo={alertNewInfo} toggleForm={toggleForm} admin={true}/>
                 </ModalBody>
             </Modal>
 

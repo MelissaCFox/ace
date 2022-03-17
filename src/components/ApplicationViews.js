@@ -35,7 +35,7 @@ export const ApplicationViews = () => {
                 } else if (currentUser.user?.is_staff) {
                     return <Today user={currentUser} />
                 } else {
-                    return <StudentProfile />
+                    return <StudentProfile student={currentUser} />
                 }
             }} />
             {
@@ -66,17 +66,17 @@ export const ApplicationViews = () => {
                     </>
                 : <>
                 <Route path="/profile">
-                    <StudentProfile user={currentUser} />
+                    <StudentProfile student={currentUser} />
                 </Route>
                 </>
             }
 
             <Route exact path="/tutor/:tutorId(\d+)">
-                <TutorProfile />
+                <TutorProfile viewer={currentUser} />
             </Route>
 
             <Route exact path="/student/:studentId(\d+)">
-                <StudentProfile />
+                <StudentProfile viewer={currentUser} />
             </Route>
 
 

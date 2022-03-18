@@ -81,6 +81,7 @@ export const ApplicationViews = () => {
                 <TutorProfile user={currentUser} />
             </Route>
 
+
             <Route exact path="/student/:studentId(\d+)">
                 <StudentProfile user={currentUser} />
             </Route>

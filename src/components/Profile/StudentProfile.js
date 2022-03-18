@@ -91,8 +91,8 @@ export const StudentProfile = ({ user, thisStudent }) => {
 
                     {
                         subjects.map(subject => {
-                            return <div key={subject.id}>
-                                <div>{subject.subject}</div>
+                            return <div key={subject.id} className="item">
+                                <div>{subject.subject}: </div>
                                 {
                                     student.focus_areas?.map(area => {
                                         if (area.subject === subject.id) {
@@ -120,7 +120,7 @@ export const StudentProfile = ({ user, thisStudent }) => {
             }}>Add Note +</Button>
             {
                 student.notes?.map(note => {
-                    return <div key={note.id} className={note.author === student.id ? "student-note" : ""}>
+                    return <div key={note.id} className={note.author === student.id ? "student-note item" : "item"}>
                         <Button onClick={() => {pinNote(note.id)}}>Pin Note?</Button>
                         <div>{note.pinned ? "**" : ""}{note.date}</div>
                         <div>{note.note}</div>

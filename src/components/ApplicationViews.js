@@ -34,8 +34,8 @@ export const ApplicationViews = () => {
                     return <AdminHome />
                 } else if (currentUser.user?.is_staff) {
                     return <Today user={currentUser} />
-                } else {
-                    return <StudentProfile />
+                } else if (currentUser.user) {
+                    return <StudentProfile user={currentUser} thisStudent={currentUser} />
                 }
             }} />
             {
@@ -61,22 +61,22 @@ export const ApplicationViews = () => {
                         <Schedule user={currentUser} />
                     </Route>
                     <Route path="/profile">
-                        <TutorProfile currentUser={currentUser} />
+                        <TutorProfile user={currentUser} />
                     </Route>
                     </>
                 : <>
                 <Route path="/profile">
-                    <StudentProfile user={currentUser} />
+                    <StudentProfile user={currentUser} thisStudent={currentUser} />
                 </Route>
                 </>
             }
 
             <Route exact path="/tutor/:tutorId(\d+)">
-                <TutorProfile />
+                <TutorProfile user={currentUser} />
             </Route>
 
             <Route exact path="/student/:studentId(\d+)">
-                <StudentProfile />
+                <StudentProfile user={currentUser} />
             </Route>
 
 

@@ -8,6 +8,7 @@ import { Modal, ModalBody, ModalHeader } from 'reactstrap';
 import { Settings } from "@material-ui/icons"
 import { NoteForm } from "../Forms/NoteForm"
 import NoteRepository from "../../repositories/NoteRepository"
+import { useHistory } from "react-router-dom"
 
 
 export const StudentProfile = ({ user, thisStudent }) => {
@@ -22,8 +23,9 @@ export const StudentProfile = ({ user, thisStudent }) => {
     const [newInfo, setNewInfo] = useState(false)
     const alertNewInfo = () => setNewInfo(!newInfo)
     const [editNote, setEditNote] = useState({})
-
     const [subjects, setSubjects] = useState([])
+
+    const history = useHistory()
 
     useEffect(() => {
         SubjectRepository.getAllSubjects().then(setSubjects)
@@ -60,7 +62,6 @@ export const StudentProfile = ({ user, thisStudent }) => {
 
     return (<>
         <div className="">
-            <div>Student Info Profile Page</div>
             <h1>{student.user?.first_name} {student.user?.last_name}</h1>
             <h3>{student.user?.email}</h3>
             <p>{student.bio}</p>
@@ -87,7 +88,7 @@ export const StudentProfile = ({ user, thisStudent }) => {
             viewer.user?.is_staff
                 ? <div>
                     <p>Focus Areas</p>
-                    {viewer.id === student.tutor_id ? <Button onClick={() => { }}>Manage Areas</Button> : ""}
+                    {viewer.id === student.tutor_id ? <Button onClick={() => {history.push(`/focus-areas/${student.id}`)}}>Manage Areas</Button> : ""}
 
                     {
                         subjects.map(subject => {

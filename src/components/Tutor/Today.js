@@ -42,8 +42,6 @@ export const Today = ({user}) => {
 
     return (<>
         <div className="">
-            <div>Tutor Schedule Page</div>
-
             <Input type="date" onChange={changeDate} />
 
             <div className="students">

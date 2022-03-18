@@ -15,3 +15,10 @@ code {
 .main-container {
   padding-top: 9rem;
 }
+
+
+.item {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+}

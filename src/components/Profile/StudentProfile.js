@@ -80,7 +80,13 @@ export const StudentProfile = ({ user, thisStudent }) => {
             <div>Initial</div>
             <div>Superscore</div>
             <div>% Change</div>
-            <Button onClick={() => { }}>View All Scores</Button>
+            <Button onClick={() => {
+                if (user.user?.is_staff) {
+                    history.push(`/student-scores/${student.id}`)
+                } else {
+                    history.push(`/my-scores`)
+                }
+            }}>View All Scores</Button>
             <Button onClick={() => { }}>Add Score(s)</Button>
         </div>
 

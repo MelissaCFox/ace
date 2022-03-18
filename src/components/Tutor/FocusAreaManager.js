@@ -46,34 +46,43 @@ export const FocusAreaManager = ({ user }) => {
 
     return (<>
         <div className="container">
-
-            <div className="">
-                {
-                    subjects.map(subject => {
-                        return <div key={subject.id} className="item subject-section">
-                            <div><h2>{subject.subject}</h2></div>
-                            <div>
-                                {
-                                    subjectAreas.filter(area => area.subject.id === subject.id).map(area => {
-                                        return <div key={area.id}>
-                                            <FormGroup check>
-                                                <Label check>
-                                                    <Input type="checkbox" value={area.id} 
-                                                    checked={studentAreas.find(areaId => areaId === area.id) ? "checked" :""} 
-                                                    onChange={handleCheck}
-                                                    />
-                                                    {area.name}
-                                                </Label>
-                                            </FormGroup>
+            {
+                student.user
+                ?student.user?.is_staff
+                    ? ""
+                    : <>
+                        <h2>Focus Areas for {student.user?.first_name} {student.user?.last_name}</h2>
+                        <div className="">
+                            {
+                                subjects.map(subject => {
+                                    return <div key={subject.id} className="item subject-section">
+                                        <div><h2>{subject.subject}</h2></div>
+                                        <div>
+                                            {
+                                                subjectAreas.filter(area => area.subject.id === subject.id).map(area => {
+                                                    return <div key={area.id}>
+                                                        <FormGroup check>
+                                                            <Label check>
+                                                                <Input type="checkbox" value={area.id}
+                                                                    checked={studentAreas.find(areaId => areaId === area.id) ? "checked" : ""}
+                                                                    onChange={handleCheck}
+                                                                />
+                                                                {area.name}
+                                                            </Label>
+                                                        </FormGroup>
+                                                    </div>
+                                                })
+                                            }
                                         </div>
-                                    })
-                                }
-                            </div>
-                            <Button onClick={updateAreas}>Update</Button>
+                                        <Button onClick={updateAreas}>Update</Button>
+                                    </div>
+                                })
+                            }
                         </div>
-                    })
-                }
-            </div>
+                        </>
+                : ""
+            }
+
 
         </div>
 

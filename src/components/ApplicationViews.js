@@ -12,6 +12,7 @@ import { Today } from "./Tutor/Today"
 import { StudentList } from "./Tutor/StudentList"
 import { Schedule } from "./Tutor/Schedule"
 import { TutorProfile } from "./Profile/TutorProfile"
+import { FocusAreaManager } from "./Tutor/FocusAreaManager"
 
 
 export const ApplicationViews = () => {
@@ -26,8 +27,6 @@ export const ApplicationViews = () => {
 
     return (
         <div className="main-container">
-
-            <h1>Hello {currentUser.user?.first_name}</h1>
 
             <Route exact path="/" render={() => {
                 if (currentUser.user?.is_superuser) {
@@ -62,6 +61,9 @@ export const ApplicationViews = () => {
                     </Route>
                     <Route path="/profile">
                         <TutorProfile user={currentUser} />
+                    </Route>
+                    <Route exact path="/focus-areas/:studentId(\d+)">
+                        <FocusAreaManager user={currentUser} />
                     </Route>
                     </>
                 : <>

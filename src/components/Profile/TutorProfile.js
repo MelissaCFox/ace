@@ -30,7 +30,6 @@ export const TutorProfile = ({ currentUser }) => {
     if (user.user?.is_staff) {
         return (<>
             <div className="">
-                <div>Tutor Profile Page</div>
                 <h1>{user.user?.first_name} {user.user?.last_name}</h1>
                 <h3>{user.user?.email}</h3>
                 <h3>{user.bio}</h3>

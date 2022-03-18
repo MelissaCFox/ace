@@ -13,6 +13,7 @@ import { StudentList } from "./Tutor/StudentList"
 import { Schedule } from "./Tutor/Schedule"
 import { TutorProfile } from "./Profile/TutorProfile"
 import { FocusAreaManager } from "./Tutor/FocusAreaManager"
+import { StudentScores } from "./Profile/StudentScores"
 
 
 export const ApplicationViews = () => {
@@ -70,6 +71,9 @@ export const ApplicationViews = () => {
                 <Route path="/profile">
                     <StudentProfile user={currentUser} thisStudent={currentUser} />
                 </Route>
+                <Route path="/my-scores">
+                    <StudentScores user={currentUser} thisStudent={currentUser} />
+                </Route>
                 </>
             }
 
@@ -79,6 +83,10 @@ export const ApplicationViews = () => {
 
             <Route exact path="/student/:studentId(\d+)">
                 <StudentProfile user={currentUser} />
+            </Route>
+
+            <Route exact path="/student-scores/:studentId(\d+)">
+                <StudentScores user={currentUser}/>
             </Route>
 
 

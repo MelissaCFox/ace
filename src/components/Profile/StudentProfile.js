@@ -119,7 +119,7 @@ export const StudentProfile = ({ user, thisStudent }) => {
                 : ""
         }
 
-        <Button onClick={() => {}}>Practice Tests</Button>
+        <Button onClick={() => {history.push(`/tests/${student.id}`)}}>Practice Tests</Button>
 
         <div>
 

@@ -23,6 +23,18 @@ const TestRepository = {
         return await fetchIt(`${Settings.remoteURL}/tests/${id}`, "DELETE")
     },
 
+    async getStudentTests(studentId) {
+        return await fetchIt(`${Settings.remoteURL}/studenttests?studentId=${studentId}`)
+    },
+
+    async updateStudentTest(id, newTest) {
+        return await fetchIt(`${Settings.remoteURL}/studenttests/${id}`, "PUT", JSON.stringify(newTest))
+    },
+
+    async addStudentTest(test) {
+        return await fetchIt(`${Settings.remoteURL}/studenttests`, "POST", JSON.stringify(test))
+    },
+
 }
 
 export default TestRepository

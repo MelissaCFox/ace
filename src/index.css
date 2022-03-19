@@ -24,6 +24,12 @@ code {
   justify-content: space-between;
 }
 
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
 .subject-section {
   height: 15rem;
 }

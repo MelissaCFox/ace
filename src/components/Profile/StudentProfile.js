@@ -9,6 +9,7 @@ import { Settings } from "@material-ui/icons"
 import { NoteForm } from "../Forms/NoteForm"
 import NoteRepository from "../../repositories/NoteRepository"
 import { useHistory } from "react-router-dom"
+import { ScoreForm } from "../Forms/ScoreForm"
 
 
 export const StudentProfile = ({ user, thisStudent }) => {
@@ -19,6 +20,8 @@ export const StudentProfile = ({ user, thisStudent }) => {
     const toggleForm = () => setForm(!form)
     const [noteForm, setNoteForm] = useState(false)
     const toggleNoteForm = () => setNoteForm(!noteForm)
+    const [scoreForm, setScoreForm] = useState(false)
+    const toggleScoreForm = () => setScoreForm(!scoreForm)
     const [firstView, setFirstView] = useState(true)
     const [newInfo, setNewInfo] = useState(false)
     const alertNewInfo = () => setNewInfo(!newInfo)
@@ -87,7 +90,7 @@ export const StudentProfile = ({ user, thisStudent }) => {
                     history.push(`/my-scores`)
                 }
             }}>View All Scores</Button>
-            <Button onClick={() => { }}>Add Score(s)</Button>
+            <Button onClick={toggleScoreForm}>Add Score(s) +</Button>
         </div>
 
         {
@@ -161,6 +164,18 @@ export const StudentProfile = ({ user, thisStudent }) => {
             <ModalHeader>Note for {student.user?.first_name} {student.user?.last_name}</ModalHeader>
             <ModalBody>
                 <NoteForm student={student} currentUser={viewer} alertNewInfo={alertNewInfo} toggleNoteForm={toggleNoteForm} editNote={editNote} />
+            </ModalBody>
+        </Modal>
+
+        <Modal animation="false"
+            centered
+            fullscreen="md"
+            size="md"
+            toggle={toggleScoreForm}
+            isOpen={scoreForm}>
+            <ModalHeader>Add Score for {student.user?.first_name} {student.user?.last_name}</ModalHeader>
+            <ModalBody>
+                <ScoreForm student={student} alertNewInfo={alertNewInfo} toggleScoreForm={toggleScoreForm}/>
             </ModalBody>
         </Modal>
 

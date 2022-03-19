@@ -2,20 +2,22 @@ import { Button } from "@material-ui/core";
 import { Settings } from "@material-ui/icons";
 import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom";
-import { FormGroup, Input, Label } from "reactstrap";
+import { Modal, ModalBody, ModalHeader } from 'reactstrap';
 import ScoreRepository from "../../repositories/ScoreRepository";
-import SubjectRepository from "../../repositories/SubjectRepository";
 import UserRepository from '../../repositories/UserRepository';
+import { ScoreForm } from "../Forms/ScoreForm"
 
 
 
 export const StudentScores = ({ user, thisStudent }) => {
-
     const { studentId } = useParams()
     const [student, setStudent] = useState({})
     const [scores, setScores] = useState([])
-
+    const [scoreForm, setScoreForm] = useState(false)
+    const toggleScoreForm = () => setScoreForm(!scoreForm)
     const [newInfo, setNewInfo] = useState(false)
+    const alertNewInfo = () => setNewInfo(!newInfo)
+    const [scoreToEdit, setScoreToEdit] = useState({})
 
     useEffect(() => {
         if (thisStudent) {
@@ -40,6 +42,10 @@ export const StudentScores = ({ user, thisStudent }) => {
                         ? ""
                         : <>
                             <h2>{thisStudent ? "My Scores" : `Scores for ${student.user?.first_name} ${student.user?.last_name}`}</h2>
+                            <Button onClick={() => {
+                                setScoreToEdit({})
+                                toggleScoreForm()
+                            }}>Add Score(s) +</Button>
                             <div className="">
                                 {
                                     scores.map(score => {
@@ -65,9 +71,12 @@ export const StudentScores = ({ user, thisStudent }) => {
                                                 <div className="score-subject">Overall</div>
                                                 <div className="subject-score">{score.overall}</div>
                                             </div>
-                                        
-                                        { user.user?.is_staff? <button><Settings /></button> : ""}
-                                        
+
+                                            {user.user?.is_staff ? <button onClick={() => {
+                                                setScoreToEdit(score)
+                                                toggleScoreForm()
+                                            }}><Settings /></button> : ""}
+
                                         </div>
                                     })
                                 }
@@ -77,6 +86,17 @@ export const StudentScores = ({ user, thisStudent }) => {
                     : ""
             }
 
+            <Modal animation="false"
+                centered
+                fullscreen="md"
+                size="md"
+                toggle={toggleScoreForm}
+                isOpen={scoreForm}>
+                <ModalHeader>{scoreToEdit.date ? "Update" : "Add"} Score for {student.user?.first_name} {student.user?.last_name}</ModalHeader>
+                <ModalBody>
+                    <ScoreForm student={student} alertNewInfo={alertNewInfo} toggleScoreForm={toggleScoreForm} edit={scoreToEdit} />
+                </ModalBody>
+            </Modal>
 
         </div>
 

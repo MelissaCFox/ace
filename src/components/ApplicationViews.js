@@ -14,6 +14,7 @@ import { Schedule } from "./Tutor/Schedule"
 import { TutorProfile } from "./Profile/TutorProfile"
 import { FocusAreaManager } from "./Tutor/FocusAreaManager"
 import { StudentScores } from "./Profile/StudentScores"
+import { StudentTestManager } from "./Tutor/StudentTestManager"
 
 
 export const ApplicationViews = () => {
@@ -65,6 +66,9 @@ export const ApplicationViews = () => {
                     </Route>
                     <Route exact path="/focus-areas/:studentId(\d+)">
                         <FocusAreaManager user={currentUser} />
+                    </Route>
+                    <Route exact path="/tests/:studentId(\d+)">
+                        <StudentTestManager user={currentUser} />
                     </Route>
                     </>
                 : <>

@@ -5,7 +5,7 @@ import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import StarIcon from '@mui/icons-material/Star';
 
 
-export const StudentTestForm = ({ alertNewInfo, thisTest, blank, studentId }) => {
+export const StudentTestForm = ({ alertNewInfo, thisTest, blank, studentId, setStartTest }) => {
     const [english, setEnglish] = useState([])
     const [math, setMath] = useState([])
     const [reading, setReading] = useState([])
@@ -199,6 +199,7 @@ export const StudentTestForm = ({ alertNewInfo, thisTest, blank, studentId }) =>
                     <Button onClick={selectAll}>Select All</Button>
                     <Button onClick={clearAll}>Clear All</Button>
                 </div>
+                {setStartTest ? <Button onClick={setStartTest}>Cancel</Button> : ""}
                 <Button onClick={updateTest}>{blank ? "Add" : "Update"}</Button>
             </div>
 

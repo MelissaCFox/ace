@@ -47,7 +47,7 @@ export const StudentTestManager = ({ user }) => {
                                     </Input>
                                     <div className="">
                                         {
-                                            studentTests.map(test => {
+                                            studentTests.filter(test => 1.0 > test.completion.overall > 0).map(test => {
                                                 return <div key={test.id} className="item test-section">
                                                     <StudentTestForm thisTest={test} alertNewInfo={alertNewInfo} />
                                                 </div>
@@ -63,7 +63,7 @@ export const StudentTestManager = ({ user }) => {
                                             tests.filter((test) => !studentTests.find(st => st.test?.id === test.id)).map(test => {
                                                 if (startTest.id === test.id) {
                                                     return <div key={test.id} className="item test-section">
-                                                        <StudentTestForm blank={test} alertNewInfo={alertNewInfo} studentId={student.id} />
+                                                        <StudentTestForm blank={test} alertNewInfo={alertNewInfo} studentId={student.id} setStartTest={setStartTest} />
                                                     </div>
                                                 } else {
                                                     return <div key={test.id} className="item test-section">
@@ -81,10 +81,17 @@ export const StudentTestManager = ({ user }) => {
                                     <h2>Completed</h2>
                                     <div className="">
                                         {
-                                            studentTests.map(test => {
-                                                return <div key={test.id} className="item test-section">
-                                                    {test.test?.name} <StarOutlineIcon />
-                                                </div>
+                                            studentTests.filter(test => test.completion.overall === 1.0).map(test => {
+                                                if (startTest.id === test.id) {
+                                                    return <div key={test.id} className="item test-section">
+                                                        <StudentTestForm thisTest={test} alertNewInfo={alertNewInfo} setStartTest={setStartTest} />
+                                                    </div>
+                                                } else {
+                                                    return <div key={test.id} className="item test-section">
+                                                        {test.test?.name} <StarOutlineIcon />
+                                                        <Button onClick={() => { setStartTest(test) }}>Edit</Button>
+                                                    </div>
+                                                }
                                             })
                                         }
                                     </div>

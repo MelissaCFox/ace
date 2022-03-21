@@ -75,11 +75,11 @@ export const StudentProfile = ({ user, thisStudent }) => {
 
                 </div>
             </div>
-            <div className="item"> Schedule: 
+            <div className="item"> Schedule:
                 <p>{student.day?.day}s</p>
                 <p>{student.start_time} - {student.end_time}</p>
             </div>
-            <div className="item">Parent Info: 
+            <div className="item">Parent Info:
                 <p>{student.parent_name}</p>
                 <p>{student.parent_email}</p>
             </div>
@@ -89,17 +89,23 @@ export const StudentProfile = ({ user, thisStudent }) => {
         </div>
 
         <div>
-
-            <ScoresTable thisStudent={student} newInfo={newInfo} />
-
-            <Button onClick={() => {
-                if (user.user?.is_staff) {
-                    history.push(`/student-scores/${student.id}`)
-                } else {
-                    history.push(`/my-scores`)
+            {
+                student.scores?.length
+                    ? <>
+                        <ScoresTable thisStudent={student} newInfo={newInfo} />
+                        <Button onClick={() => {
+                            if (user.user?.is_staff) {
+                                history.push(`/student-scores/${student.id}`)
+                            } else {
+                                history.push(`/my-scores`)
+                            }
+                        }}>View All Scores</Button>
+                    </>
+                    : ""
                 }
-            }}>View All Scores</Button>
-            <Button onClick={toggleScoreForm}>Add Score(s) +</Button>
+
+                <Button onClick={toggleScoreForm}>Add Score(s) +</Button>
+
         </div>
 
         {

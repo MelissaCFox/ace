@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react"
 import { Table } from 'reactstrap';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 
 export const ScoresTable = ({ thisStudent, newInfo }) => {
     const [student, setStudent] = useState({})
     const [firstTest, setFirstTest] = useState({})
     const [superscore, setSuperscore] = useState({})
+    const [progress, setProgress] = useState({})
 
     useEffect(() => {
         if (thisStudent.scores) {
@@ -15,6 +17,14 @@ export const ScoresTable = ({ thisStudent, newInfo }) => {
             firstTest.overall = Math.ceil((firstTest.english + firstTest.math + firstTest.reading + firstTest.science) / 4)
             setFirstTest(firstTest)
             // setSuperscore info from thisStudent data
+            setSuperscore(thisStudent.superscore)
+            setProgress({
+                english: thisStudent.superscore.english - firstTest.english,
+                math: thisStudent.superscore.math - firstTest.math,
+                reading: thisStudent.superscore.reading - firstTest.reading,
+                science: thisStudent.superscore.science - firstTest.science,
+                overall: thisStudent.superscore.overall - firstTest.overall
+            })
         }
     }, [thisStudent])
 
@@ -29,7 +39,6 @@ export const ScoresTable = ({ thisStudent, newInfo }) => {
     return (<>
             <Table>
                 <thead>
-
                     <tr>
                         <th>{student.user?.first_name}</th>
                         <th>Date</th>
@@ -53,20 +62,20 @@ export const ScoresTable = ({ thisStudent, newInfo }) => {
                     <tr>
                         <td>Superscore</td>
                         <td></td>
-                        <td>22</td>
-                        <td>20</td>
-                        <td>24</td>
-                        <td>21</td>
-                        <td>22</td>
+                        <td>{superscore.english}</td>
+                        <td>{superscore.math}</td>
+                        <td>{superscore.reading}</td>
+                        <td>{superscore.science}</td>
+                        <td>{superscore.overall}</td>
                     </tr>
                     <tr>
                         <td>Progress</td>
                         <td></td>
-                        <td>{22 - firstTest.english}</td>
-                        <td>{20 - firstTest.math}</td>
-                        <td>{24 - firstTest.reading}</td>
-                        <td>{21 - firstTest.science}</td>
-                        <td>{22 - firstTest.overall}</td>
+                        <td>{progress.english ? <ArrowDropUpIcon /> : ""}{progress.english}</td>
+                        <td>{progress.math ? <ArrowDropUpIcon /> : ""}{progress.math}</td>
+                        <td>{progress.reading ? <ArrowDropUpIcon /> : ""}{progress.reading}</td>
+                        <td>{progress.science ? <ArrowDropUpIcon /> : ""}{progress.science}</td>
+                        <td>{progress.overall ? <ArrowDropUpIcon /> : ""}{progress.overall}</td>
                     </tr>
                 </tbody>
 

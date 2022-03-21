@@ -9,7 +9,7 @@ export const ScoresTable = ({ thisStudent, newInfo }) => {
     const [progress, setProgress] = useState({})
 
     useEffect(() => {
-        if (thisStudent.scores) {
+        if (thisStudent.scores?.length > 0) {
             setStudent(thisStudent)
             // find score with earliest date and setFirstTest
             let scores = thisStudent.scores.sort((a,b) => a.date.split("-").join("") - b.date.split("-").join(""))

@@ -73,7 +73,7 @@ export const StudentScores = ({ user, thisStudent }) => {
                                                 <div className="subject-score">{score.overall}</div>
                                             </div>
 
-                                            {user.user?.is_staff ? <button onClick={() => {
+                                            {user.user?.is_staff && user.id === score.submitter?.id ? <button onClick={() => {
                                                 setScoreToEdit(score)
                                                 toggleScoreForm()
                                             }}><Settings /></button> : ""}

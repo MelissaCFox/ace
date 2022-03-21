@@ -19,7 +19,7 @@ export const StudentTestForm = ({ alertNewInfo, thisTest, blank, studentId, setS
             setEnglish(["0", "0", "0", "0", "0"])
             setMath(["0", "0", "0"])
             setReading(["0", "0", "0", "0"])
-            if (blank.num_sci == 6) {
+            if (blank.num_sci === 6) {
                 setScience(["0", "0", "0", "0", "0", "0"])
             } else {
                 setScience(["0", "0", "0", "0", "0", "0", "0"])
@@ -46,7 +46,7 @@ export const StudentTestForm = ({ alertNewInfo, thisTest, blank, studentId, setS
     const handleCheck = (subject, index) => {
         if (subject === "english") {
             let copy = [...english]
-            if (copy[index] == "1") {
+            if (copy[index] === "1") {
                 copy[index] = "0"
             } else {
                 copy[index] = "1"
@@ -54,7 +54,7 @@ export const StudentTestForm = ({ alertNewInfo, thisTest, blank, studentId, setS
             setEnglish(copy)
         } else if (subject === "math") {
             let copy = [...math]
-            if (copy[index] == "1") {
+            if (copy[index] === "1") {
                 copy[index] = "0"
             } else {
                 copy[index] = "1"
@@ -62,7 +62,7 @@ export const StudentTestForm = ({ alertNewInfo, thisTest, blank, studentId, setS
             setMath(copy)
         } else if (subject === "reading") {
             let copy = [...reading]
-            if (copy[index] == "1") {
+            if (copy[index] === "1") {
                 copy[index] = "0"
             } else {
                 copy[index] = "1"
@@ -70,7 +70,7 @@ export const StudentTestForm = ({ alertNewInfo, thisTest, blank, studentId, setS
             setReading(copy)
         } else if (subject === "science") {
             let copy = [...science]
-            if (copy[index] == "1") {
+            if (copy[index] === "1") {
                 copy[index] = "0"
             } else {
                 copy[index] = "1"
@@ -117,7 +117,7 @@ export const StudentTestForm = ({ alertNewInfo, thisTest, blank, studentId, setS
                                 <FormGroup check>
                                     <Label check>
                                         <Input type="checkbox" value={section}
-                                            checked={section == 1}
+                                            checked={section === "1"}
                                             onChange={() => { handleCheck("english", index) }}
                                         />
                                         {index + 1}
@@ -138,7 +138,7 @@ export const StudentTestForm = ({ alertNewInfo, thisTest, blank, studentId, setS
                                 <FormGroup check>
                                     <Label check>
                                         <Input type="checkbox" value={section}
-                                            checked={section == 1}
+                                            checked={section === "1"}
                                             onChange={() => { handleCheck("math", index) }}
                                         />
                                         {index + 1}
@@ -159,7 +159,7 @@ export const StudentTestForm = ({ alertNewInfo, thisTest, blank, studentId, setS
                                 <FormGroup check>
                                     <Label check>
                                         <Input type="checkbox" value={section}
-                                            checked={section == 1}
+                                            checked={section === "1"}
                                             onChange={() => { handleCheck("reading", index) }}
                                         />
                                         {index + 1}
@@ -180,7 +180,7 @@ export const StudentTestForm = ({ alertNewInfo, thisTest, blank, studentId, setS
                                 <FormGroup check>
                                     <Label check>
                                         <Input type="checkbox" value={section}
-                                            checked={section == 1}
+                                            checked={section === "1"}
                                             onChange={() => { handleCheck("science", index) }}
                                         />
                                         {index + 1}

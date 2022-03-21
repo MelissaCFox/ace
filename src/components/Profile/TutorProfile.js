@@ -45,7 +45,7 @@ export const TutorProfile = ({ currentUser }) => {
                 isOpen={form}>
                 <ModalHeader>{user.user?.first_name} {user.user?.last_name}</ModalHeader>
                 <ModalBody>
-                    <TutorForm edit={user} alertNewInfo={alertNewInfo} toggleForm={toggleForm}/>
+                    <TutorForm edit={user} alertNewInfo={alertNewInfo} toggleForm={toggleForm} currentUser={currentUser}/>
                 </ModalBody>
             </Modal>
 

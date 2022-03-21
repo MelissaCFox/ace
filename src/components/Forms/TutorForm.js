@@ -5,10 +5,12 @@ import UserRepository from "../../repositories/UserRepository";
 import useSimpleAuth from '../../repositories/useSimpleAuth';
 
 
-export const TutorForm = ({ edit, alertNewInfo, toggleForm, admin }) => {
+export const TutorForm = ({ edit, alertNewInfo, toggleForm, admin, currentUser }) => {
     const { register } = useSimpleAuth()
     const [confirm, setConfirm] = useState(false)
     const toggleConfirm = () => setConfirm(!confirm)
+    const [mismatch, setMismatch] = useState(false)
+    const toggleMismatch = () => setMismatch(!mismatch)
     const [tutor, setTutor] = useState({
         firstName: edit.user ? edit.user?.first_name : "",
         lastName: edit.user ? edit.user?.last_name : "",
@@ -28,10 +30,18 @@ export const TutorForm = ({ edit, alertNewInfo, toggleForm, admin }) => {
 
     const saveTutor = (e) => {
         e.preventDefault()
-        //!! Make sure all fields are filled out
         if (edit.user) {
-            UserRepository.update(edit.id, tutor).then(update)
+            if (tutor.password && tutor.password === tutor.verifyPassword) {
+                let updated_tutor = { ...tutor }
+                updated_tutor.newPassword = tutor.password
+                UserRepository.update(edit.id, updated_tutor).then(update)
+            } else if (tutor.password) {
+                toggleMismatch()
+            } else {
+                UserRepository.update(edit.id, tutor).then(update)
+            }
         } else {
+            //!! Make sure all fields are filled out
             register(tutor).then(update)
         }
     }
@@ -43,6 +53,7 @@ export const TutorForm = ({ edit, alertNewInfo, toggleForm, admin }) => {
                 <InputGroupText className="label">First Name</InputGroupText>
                 <Input required type="text" className="" name="firstName" placeholder="First Name"
                     defaultValue={tutor.firstName}
+                    readOnly={edit.user}
                     onChange={(e) => {
                         const copy = { ...tutor }
                         copy.firstName = e.target.value
@@ -53,6 +64,7 @@ export const TutorForm = ({ edit, alertNewInfo, toggleForm, admin }) => {
                 <InputGroupText className="label">Last Name</InputGroupText>
                 <Input required type="text" className="" name="lastName" placeholder="Last Name"
                     defaultValue={tutor.lastName}
+                    readOnly={edit.user}
                     onChange={(e) => {
                         const copy = { ...tutor }
                         copy.lastName = e.target.value
@@ -63,6 +75,7 @@ export const TutorForm = ({ edit, alertNewInfo, toggleForm, admin }) => {
                 <InputGroupText className="label">Email</InputGroupText>
                 <Input required type="text" className="" name="email" placeholder="Email"
                     defaultValue={tutor.email}
+                    readOnly={edit.user && !currentUser}
                     onChange={(e) => {
                         const copy = { ...tutor }
                         copy.email = e.target.value
@@ -73,6 +86,7 @@ export const TutorForm = ({ edit, alertNewInfo, toggleForm, admin }) => {
                 <InputGroupText className="label">Username</InputGroupText>
                 <Input required type="text" className="" name="username" placeholder="Username"
                     defaultValue={tutor.username}
+                    readOnly={edit.user}
                     onChange={(e) => {
                         const copy = { ...tutor }
                         copy.username = e.target.value
@@ -82,6 +96,7 @@ export const TutorForm = ({ edit, alertNewInfo, toggleForm, admin }) => {
             <InputGroup className="">
                 <InputGroupText className="label">Password</InputGroupText>
                 <Input required type="password" className="" name="password" placeholder="Password"
+                    readOnly={edit.user && !currentUser}
                     onChange={(e) => {
                         const copy = { ...tutor }
                         copy.password = e.target.value
@@ -91,6 +106,7 @@ export const TutorForm = ({ edit, alertNewInfo, toggleForm, admin }) => {
             <InputGroup className="">
                 <InputGroupText className="label">Verify Password</InputGroupText>
                 <Input required type="password" className="" name="verifyPassword" placeholder="Verify Password"
+                    readOnly={edit.user && !currentUser}
                     onChange={(e) => {
                         const copy = { ...tutor }
                         copy.verifyPassword = e.target.value
@@ -101,6 +117,7 @@ export const TutorForm = ({ edit, alertNewInfo, toggleForm, admin }) => {
                 <InputGroupText className="label">Bio</InputGroupText>
                 <Input required type="textarea" className="" name="bio" placeholder="Bio"
                     defaultValue={tutor.bio}
+                    readOnly={edit.user && !currentUser}
                     onChange={(e) => {
                         const copy = { ...tutor }
                         copy.bio = e.target.value
@@ -137,6 +154,10 @@ export const TutorForm = ({ edit, alertNewInfo, toggleForm, admin }) => {
                     </>
                     : ""
             }
+            <Dialog open={mismatch} toggle={toggleMismatch}>
+                Passwords Don't Match!
+                <Button onClick={toggleMismatch}>Oops</Button>
+            </Dialog>
         </Form>
     </>)
 

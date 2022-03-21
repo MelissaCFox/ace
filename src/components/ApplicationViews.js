@@ -41,59 +41,62 @@ export const ApplicationViews = () => {
             }} />
             {
                 currentUser.user?.is_staff
-                ? currentUser.user?.is_superuser
-                    ? <>
-                        <Route path="/student-manager">
-                            <StudentManager />
+                    ? currentUser.user?.is_superuser
+                        ? <>
+                            <Route path="/student-manager">
+                                <StudentManager />
+                            </Route>
+                            <Route path="/tutor-manager">
+                                <TutorManager />
+                            </Route>
+                            <Route path="/test-manager">
+                                <TestManager />
+                            </Route>
+                            <Route exact path="/student/:studentId(\d+)">
+                                <StudentProfile user={currentUser} />
+                            </Route>
+                            <Route exact path="/student-scores/:studentId(\d+)">
+                                <StudentScores user={currentUser} />
+                            </Route>
+
+                        </>
+                        : <>
+                            <Route path="/students">
+                                <StudentList user={currentUser} />
+                            </Route>
+                            <Route path="/schedule">
+                                <Schedule user={currentUser} />
+                            </Route>
+                            <Route path="/profile">
+                                <TutorProfile currentUser={currentUser} />
+                            </Route>
+                            <Route exact path="/student/:studentId(\d+)">
+                                <StudentProfile user={currentUser} />
+                            </Route>
+                            <Route exact path="/student-scores/:studentId(\d+)">
+                                <StudentScores user={currentUser} />
+                            </Route>
+                            <Route exact path="/focus-areas/:studentId(\d+)">
+                                <FocusAreaManager user={currentUser} />
+                            </Route>
+                            <Route exact path="/tests/:studentId(\d+)">
+                                <StudentTestManager user={currentUser} />
+                            </Route>
+                        </>
+                    : <>
+                        <Route path="/profile">
+                            <StudentProfile user={currentUser} thisStudent={currentUser} />
                         </Route>
-                        <Route path="/tutor-manager">
-                            <TutorManager />
-                        </Route>
-                        <Route path="/test-manager">
-                            <TestManager />
+                        <Route path="/my-scores">
+                            <StudentScores user={currentUser} thisStudent={currentUser} />
                         </Route>
 
                     </>
-                    : <>
-                    <Route path="/students">
-                        <StudentList user={currentUser} />
-                    </Route>
-                    <Route path="/schedule">
-                        <Schedule user={currentUser} />
-                    </Route>
-                    <Route path="/profile">
-                        <TutorProfile user={currentUser} />
-                    </Route>
-                    <Route exact path="/focus-areas/:studentId(\d+)">
-                        <FocusAreaManager user={currentUser} />
-                    </Route>
-                    <Route exact path="/tests/:studentId(\d+)">
-                        <StudentTestManager user={currentUser} />
-                    </Route>
-                    </>
-                : <>
-                <Route path="/profile">
-                    <StudentProfile user={currentUser} thisStudent={currentUser} />
-                </Route>
-                <Route path="/my-scores">
-                    <StudentScores user={currentUser} thisStudent={currentUser} />
-                </Route>
-                </>
             }
 
             <Route exact path="/tutor/:tutorId(\d+)">
                 <TutorProfile user={currentUser} />
             </Route>
-
-
-            <Route exact path="/student/:studentId(\d+)">
-                <StudentProfile user={currentUser} />
-            </Route>
-
-            <Route exact path="/student-scores/:studentId(\d+)">
-                <StudentScores user={currentUser}/>
-            </Route>
-
 
         </div>
     )

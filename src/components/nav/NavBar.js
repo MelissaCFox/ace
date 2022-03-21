@@ -61,7 +61,7 @@ export const NavBar = () => {
                                     <li className="nav-item"><Link to="/profile">Profile</Link></li>
                                     </ul>
                                     <ul className="navbar-nav">
-                                    <li className="nav-item"><Link to="/scores">Scores</Link></li>
+                                    <li className="nav-item"><Link to="/my-scores">Scores</Link></li>
                                     </ul>
                                 </>
                         }

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react"
 import TestRepository from '../../repositories/TestRepository';
 
 
-export const StudentTestForm = ({ alertNewInfo, thisTest, blank, studentId, setStartTest }) => {
+export const StudentTestForm = ({ alertNewInfo, thisTest, blank, studentId, setStartTest, noteForm, setTestFormTest }) => {
     const [english, setEnglish] = useState([])
     const [math, setMath] = useState([])
     const [reading, setReading] = useState([])
@@ -37,9 +37,21 @@ export const StudentTestForm = ({ alertNewInfo, thisTest, blank, studentId, setS
         if (blank) {
             test.testId = blank.id
             test.studentId = studentId
-                TestRepository.addStudentTest(test).then(alertNewInfo)
+                TestRepository.addStudentTest(test).then(() => {
+                    if (noteForm) {
+                        setTestFormTest({})
+                    } else {
+                        alertNewInfo()
+                    }
+                })
         } else {
-            TestRepository.updateStudentTest(thisTest.id, test).then(alertNewInfo)
+            TestRepository.updateStudentTest(thisTest.id, test).then(() => {
+                if (noteForm) {
+                    setTestFormTest({})
+                } else {
+                    alertNewInfo()
+                }
+            })
         }
     }
 
@@ -106,7 +118,7 @@ export const StudentTestForm = ({ alertNewInfo, thisTest, blank, studentId, setS
 
         <Form className="">
 
-            <div className="item"><h3>{blank ? blank.name : thisTest.test?.name}</h3> <p>{thisTest.test? `Updated: ${thisTest.updated}` : ""}</p>  </div>
+            <div className="item"><h3>{blank ? blank.name : thisTest.test?.name}</h3> <p>{thisTest?.test? `Updated: ${thisTest?.updated}` : ""}</p>  </div>
 
             <div className="item">
                 <p>English</p>

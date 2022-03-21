@@ -102,9 +102,9 @@ export const StudentProfile = ({ user, thisStudent }) => {
                         }}>View All Scores</Button>
                     </>
                     : ""
-                }
+            }
 
-                <Button onClick={toggleScoreForm}>Add Score(s) +</Button>
+            <Button onClick={toggleScoreForm}>Add Score(s) +</Button>
 
         </div>
 
@@ -153,10 +153,15 @@ export const StudentProfile = ({ user, thisStudent }) => {
                         <Button onClick={() => { pinNote(note.id) }}>Pin Note?</Button>
                         <div>{note.pinned ? "**" : ""}{note.date}</div>
                         <div>{note.note}</div>
-                        {note.author === viewer.id ? <button onClick={() => {
-                            setEditNote(note)
-                            toggleNoteForm()
-                        }}><Settings /></button> : ""}
+
+                        {
+                            note.author?.id === user.id
+                                ? <button onClick={() => {
+                                    setEditNote(note)
+                                    toggleNoteForm()
+                                }}><Settings /></button>
+                                : ""
+                        }
                     </div>
                 })
             }

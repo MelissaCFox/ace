@@ -1,8 +1,6 @@
 import { Form, Input, Button, Label, FormGroup } from 'reactstrap';
 import React, { useEffect, useState } from "react"
 import TestRepository from '../../repositories/TestRepository';
-import StarOutlineIcon from '@mui/icons-material/StarOutline';
-import StarIcon from '@mui/icons-material/Star';
 
 
 export const StudentTestForm = ({ alertNewInfo, thisTest, blank, studentId, setStartTest }) => {
@@ -108,7 +106,7 @@ export const StudentTestForm = ({ alertNewInfo, thisTest, blank, studentId, setS
 
         <Form className="">
 
-            <div><h3>{blank ? blank.name : thisTest.test?.name} <StarIcon /></h3>  </div>
+            <div className="item"><h3>{blank ? blank.name : thisTest.test?.name}</h3> <p>{thisTest.test? `Updated: ${thisTest.updated}` : ""}</p>  </div>
 
             <div className="item">
                 <p>English</p>
@@ -118,8 +116,8 @@ export const StudentTestForm = ({ alertNewInfo, thisTest, blank, studentId, setS
                             return <div key={index + 1}>
                                 <FormGroup check>
                                     <Label check>
-                                        <Input type="checkbox" value={english[index]}
-                                            checked={english[index] == 1}
+                                        <Input type="checkbox" value={section}
+                                            checked={section == 1}
                                             onChange={() => { handleCheck("english", index) }}
                                         />
                                         {index + 1}

@@ -5,8 +5,6 @@ import { Input } from "reactstrap";
 import TestRepository from "../../repositories/TestRepository";
 import UserRepository from '../../repositories/UserRepository';
 import { StudentTestForm } from "../Forms/StudentTestForm";
-import StarOutlineIcon from '@mui/icons-material/StarOutline';
-import StarIcon from '@mui/icons-material/Star';
 
 
 export const StudentTestManager = ({ user }) => {
@@ -17,6 +15,8 @@ export const StudentTestManager = ({ user }) => {
     const [newInfo, setNewInfo] = useState(false)
     const alertNewInfo = () => setNewInfo(!newInfo)
     const [startTest, setStartTest] = useState({})
+    const [filter, setFilter] = useState("")
+    const [filteredTests, setFilteredTests] = useState([])
 
     useEffect(() => {
         UserRepository.get(studentId).then(setStudent)
@@ -24,8 +24,24 @@ export const StudentTestManager = ({ user }) => {
     }, [])
 
     useEffect(() => {
-        TestRepository.getStudentTests(studentId).then(setStudentTests)
+        TestRepository.getStudentTests(studentId).then((r) => {
+            setStudentTests(r.sort((a,b) => b.updated - a.updated))
+        })
     }, [newInfo])
+
+    useEffect(() => {
+        let copy = [...studentTests]
+         if (filter === "english") {
+            copy = copy.sort((a,b) => a.completion.english - b.completion.english)
+        } else if (filter =="math") {
+            copy = copy.sort((a,b) => a.completion.math - b.completion.math)
+        } else if (filter === "reading") {
+            copy = copy.sort((a,b) => a.completion.reading - b.completion.reading)
+        } else if (filter === "science") {
+            copy = copy.sort((a,b) => a.completion.science - b.completion.science)
+        }
+        setFilteredTests(copy)
+    },[filter, studentTests])
 
     return (<>
         <div className="container">
@@ -38,16 +54,16 @@ export const StudentTestManager = ({ user }) => {
 
                                 <div>
                                     <h2>In Progress</h2>
-                                    <Input type="select">
-                                        <option value="0">Any Available Sections</option>
-                                        <option value="">English</option>
-                                        <option value="">Math</option>
-                                        <option value="">Reading</option>
-                                        <option value="">Science</option>
+                                    <Input onChange={(e) => {setFilter(e.target.value)}} type="select">
+                                        <option value="">Any Available Sections</option>
+                                        <option value="english">English</option>
+                                        <option value="math">Math</option>
+                                        <option value="reading">Reading</option>
+                                        <option value="science">Science</option>
                                     </Input>
                                     <div className="">
                                         {
-                                            studentTests.filter(test => 1.0 > test.completion.overall > 0).map(test => {
+                                            filteredTests.filter(test => 1.0 > test.completion.overall > 0).map(test => {
                                                 return <div key={test.id} className="item test-section">
                                                     <StudentTestForm thisTest={test} alertNewInfo={alertNewInfo} />
                                                 </div>
@@ -67,7 +83,7 @@ export const StudentTestManager = ({ user }) => {
                                                     </div>
                                                 } else {
                                                     return <div key={test.id} className="item test-section">
-                                                        <div>{test.name} <StarOutlineIcon /></div>
+                                                        <div>{test.name}</div>
                                                         <Button onClick={() => { setStartTest(test) }}>Start</Button>
                                                     </div>
 
@@ -88,7 +104,7 @@ export const StudentTestManager = ({ user }) => {
                                                     </div>
                                                 } else {
                                                     return <div key={test.id} className="item test-section">
-                                                        {test.test?.name} <StarOutlineIcon />
+                                                        {test.test?.name} {test.updated}
                                                         <Button onClick={() => { setStartTest(test) }}>Edit</Button>
                                                     </div>
                                                 }

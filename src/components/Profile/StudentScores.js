@@ -51,6 +51,7 @@ export const StudentScores = ({ user, thisStudent }) => {
                                     scores.map(score => {
                                         return <div key={score.id} className="score item">
                                             <div>{score.date}</div>
+                                            <div>{score.test.name}</div>
                                             <div className="score-section">
                                                 <div className="score-subject">English</div>
                                                 <div className="subject-score">{score.english}</div>

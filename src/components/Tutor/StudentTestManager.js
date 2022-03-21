@@ -21,19 +21,19 @@ export const StudentTestManager = ({ user }) => {
     useEffect(() => {
         UserRepository.get(studentId).then(setStudent)
         TestRepository.getAll().then(setTests)
-    }, [])
+    }, [studentId])
 
     useEffect(() => {
         TestRepository.getStudentTests(studentId).then((r) => {
             setStudentTests(r.sort((a,b) => b.updated - a.updated))
         })
-    }, [newInfo])
+    }, [newInfo, studentId])
 
     useEffect(() => {
         let copy = [...studentTests]
          if (filter === "english") {
             copy = copy.sort((a,b) => a.completion.english - b.completion.english)
-        } else if (filter =="math") {
+        } else if (filter === "math") {
             copy = copy.sort((a,b) => a.completion.math - b.completion.math)
         } else if (filter === "reading") {
             copy = copy.sort((a,b) => a.completion.reading - b.completion.reading)
@@ -55,7 +55,7 @@ export const StudentTestManager = ({ user }) => {
                                 <div>
                                     <h2>In Progress</h2>
                                     <Input onChange={(e) => {setFilter(e.target.value)}} type="select">
-                                        <option value="">Any Available Sections</option>
+                                        <option value="">Most Recent</option>
                                         <option value="english">English</option>
                                         <option value="math">Math</option>
                                         <option value="reading">Reading</option>

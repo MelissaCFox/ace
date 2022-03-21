@@ -4,12 +4,13 @@ import { useParams } from "react-router-dom"
 import UserRepository from "../../repositories/UserRepository"
 import SubjectRepository from "../../repositories/SubjectRepository"
 import { StudentForm } from "../Forms/StudentForm"
-import { Modal, ModalBody, ModalHeader } from 'reactstrap';
+import { Modal, ModalBody, ModalHeader, Table } from 'reactstrap';
 import { Settings } from "@material-ui/icons"
 import { NoteForm } from "../Forms/NoteForm"
 import NoteRepository from "../../repositories/NoteRepository"
 import { useHistory } from "react-router-dom"
 import { ScoreForm } from "../Forms/ScoreForm"
+import { ScoresTable } from "../Student/ScoresTable"
 
 
 export const StudentProfile = ({ user, thisStudent }) => {
@@ -36,7 +37,7 @@ export const StudentProfile = ({ user, thisStudent }) => {
 
     useEffect(() => {
         if (firstView) {
-            if (thisStudent) {
+            if (thisStudent?.notes) {
                 thisStudent.notes?.sort((a, b) => b.pinned - a.pinned)
                 setStudent(thisStudent)
                 setFirstView(false)
@@ -48,7 +49,7 @@ export const StudentProfile = ({ user, thisStudent }) => {
                 })
                 setFirstView(false)
             }
-        } else {
+        } else if (student.notes) {
             UserRepository.get(student.id).then((r) => {
                 r.notes?.sort((a, b) => b.pinned - a.pinned)
                 setStudent(r)
@@ -56,7 +57,7 @@ export const StudentProfile = ({ user, thisStudent }) => {
         }
         setViewer(user)
 
-    }, [studentId, thisStudent, user, newInfo])
+    }, [studentId, thisStudent, user, newInfo, firstView])
 
     const pinNote = (noteId) => {
         NoteRepository.pin(noteId).then(alertNewInfo)
@@ -69,20 +70,28 @@ export const StudentProfile = ({ user, thisStudent }) => {
             <h3>{student.user?.email}</h3>
             <p>{student.bio}</p>
             {/* <p>Tutor: {user.tutor_id}</p> */}
-            <p>{student.day?.day}s</p>
-            <p>{student.start_time} - {student.end_time}</p>
-            <p>{student.parent_name}</p>
-            <p>{student.parent_email}</p>
+            <div> Tutor(s):
+                <div className="item">
+
+                </div>
+            </div>
+            <div className="item"> Schedule: 
+                <p>{student.day?.day}s</p>
+                <p>{student.start_time} - {student.end_time}</p>
+            </div>
+            <div className="item">Parent Info: 
+                <p>{student.parent_name}</p>
+                <p>{student.parent_email}</p>
+            </div>
 
             {user ? <Button onClick={toggleForm}>Edit Profile</Button> : ""}
 
         </div>
 
         <div>
-            <div>Scores</div>
-            <div>Initial</div>
-            <div>Superscore</div>
-            <div>% Change</div>
+
+            <ScoresTable thisStudent={student} newInfo={newInfo} />
+
             <Button onClick={() => {
                 if (user.user?.is_staff) {
                     history.push(`/student-scores/${student.id}`)
@@ -96,20 +105,24 @@ export const StudentProfile = ({ user, thisStudent }) => {
         {
             viewer.user?.is_staff
                 ? <div>
-                    <p>Focus Areas</p>
-                    {viewer.id === student.tutor_id ? <Button onClick={() => {history.push(`/focus-areas/${student.id}`)}}>Manage Areas</Button> : ""}
+                    <div className="item">
+                        <p>Focus Areas</p>
+                        {viewer.id === student.tutor_id ? <Button onClick={() => { history.push(`/focus-areas/${student.id}`) }}>Manage Areas</Button> : ""}
+                    </div>
 
                     {
                         subjects.map(subject => {
                             return <div key={subject.id} className="item">
                                 <div>{subject.subject}: </div>
-                                {
-                                    student.focus_areas?.map(area => {
-                                        if (area.subject === subject.id) {
-                                            return <div key={area.id}>{area.name}</div>
-                                        }
-                                    })
-                                }
+                                <div className="item">
+                                    {
+                                        student.focus_areas?.map(area => {
+                                            if (area.subject === subject.id) {
+                                                return <div key={area.id}>{area.name}</div>
+                                            } else return false
+                                        })
+                                    }
+                                </div>
                             </div>
                         })
 
@@ -119,7 +132,7 @@ export const StudentProfile = ({ user, thisStudent }) => {
                 : ""
         }
 
-        <Button onClick={() => {history.push(`/tests/${student.id}`)}}>Practice Tests</Button>
+        <Button onClick={() => { history.push(`/tests/${student.id}`) }}>Practice Tests</Button>
 
         <div>
 
@@ -131,7 +144,7 @@ export const StudentProfile = ({ user, thisStudent }) => {
             {
                 student.notes?.map(note => {
                     return <div key={note.id} className={note.author === student.id ? "student-note item" : "item"}>
-                        <Button onClick={() => {pinNote(note.id)}}>Pin Note?</Button>
+                        <Button onClick={() => { pinNote(note.id) }}>Pin Note?</Button>
                         <div>{note.pinned ? "**" : ""}{note.date}</div>
                         <div>{note.note}</div>
                         {note.author === viewer.id ? <button onClick={() => {
@@ -175,7 +188,7 @@ export const StudentProfile = ({ user, thisStudent }) => {
             isOpen={scoreForm}>
             <ModalHeader>Add Score for {student.user?.first_name} {student.user?.last_name}</ModalHeader>
             <ModalBody>
-                <ScoreForm student={student} alertNewInfo={alertNewInfo} toggleScoreForm={toggleScoreForm}/>
+                <ScoreForm student={student} alertNewInfo={alertNewInfo} toggleScoreForm={toggleScoreForm} />
             </ModalBody>
         </Modal>
 

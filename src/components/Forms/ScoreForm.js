@@ -37,7 +37,7 @@ export const ScoreForm = ({ toggleScoreForm, alertNewInfo, edit, student }) => {
     }, [edit, student])
 
     const submitScore = () => {
-        if (edit.date) {
+        if (edit?.date) {
             ScoreRepository.update(edit.id, score).then(() => {
                 alertNewInfo()
                 toggleScoreForm()

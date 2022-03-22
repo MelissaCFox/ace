@@ -6,7 +6,7 @@ import UserRepository from "../../repositories/UserRepository"
 import { StudentForm } from '../Forms/StudentForm';
 import { Modal, ModalBody, ModalHeader } from 'reactstrap';
 
-export const StudentManager = () => {
+export const StudentManager = ({currentUser}) => {
     const [allStudents, setAllStudents] = useState([])
     const [students, setStudents] = useState([])
     const [tutors, setTutors] = useState([])
@@ -115,7 +115,7 @@ export const StudentManager = () => {
                 isOpen={form}>
                 <ModalHeader>{studentToEdit?.user?.first_name ? `${studentToEdit?.user?.first_name} ${studentToEdit?.user?.last_name}` : "Add Student"}</ModalHeader>
                 <ModalBody>
-                    <StudentForm edit={studentToEdit} alertNewInfo={alertNewInfo} toggleForm={toggleForm}/>
+                    <StudentForm edit={studentToEdit} alertNewInfo={alertNewInfo} toggleForm={toggleForm} currentUser={currentUser}/>
                 </ModalBody>
             </Modal>
 

@@ -38,7 +38,7 @@ export const StudentForm = ({ edit, alertNewInfo, toggleForm, currentUser }) => 
             let newPermissions = {...disableEdit}
             if (currentUser.user.is_superuser && edit.user) {
                 newPermissions.admin = true
-            } else if (currentUser.user.is_staff && edit.user && edit.tutors?.find(pair => pair.tutor === currentUser.id)) {
+            } else if (currentUser.user.is_staff && edit.user && edit.tutors?.find(pair => pair.tutor.id === currentUser.id)) {
                 newPermissions.tutor = true
             } else if (student && currentUser.id === edit.id) {
                 newPermissions.student = true
@@ -223,12 +223,12 @@ export const StudentForm = ({ edit, alertNewInfo, toggleForm, currentUser }) => 
             {
                 currentUser.user?.is_superuser
                     ? <>
-                        <Button onClick={toggleConfirm}>{edit.user.is_active ? "Deactivate" : "Activate"}</Button>
+                        <Button onClick={toggleConfirm}>{edit.user?.is_active ? "Deactivate" : "Activate"}</Button>
                         <Dialog open={confirm} toggle={toggleConfirm}>
                             Are You Sure?
                             <Button onClick={() => {
                                 UserRepository.activate(edit.user?.id).then(update)
-                            }}>Yes, {edit.user.is_active ? "Deactivate" : "Activate"}</Button>
+                            }}>Yes, {edit.user?.is_active ? "Deactivate" : "Activate"}</Button>
                             <Button onClick={toggleConfirm}>Cancel</Button>
                         </Dialog>
                     </>

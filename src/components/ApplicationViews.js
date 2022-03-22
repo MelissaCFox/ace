@@ -44,7 +44,7 @@ export const ApplicationViews = () => {
                     ? currentUser.user?.is_superuser
                         ? <>
                             <Route path="/student-manager">
-                                <StudentManager />
+                                <StudentManager currentUser={currentUser}/>
                             </Route>
                             <Route path="/tutor-manager">
                                 <TutorManager />

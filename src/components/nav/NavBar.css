@@ -20,7 +20,7 @@ nav {
 .navbar-nav-links {
     display: flex;
     flex-wrap: wrap;
-    align-content: center;
+    
 }
 
 .navbar-nav {
@@ -40,6 +40,6 @@ nav {
 .header {
     display: flex;
     flex-wrap: wrap;
-
+    justify-content: space-between;
 }
 

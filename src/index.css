@@ -14,6 +14,11 @@ code {
 
 .main-container {
   padding-top: 9rem;
+  margin: 0 4rem 4rem 4rem;
+}
+
+.section {
+  margin: 1rem 0;
 }
 
 
@@ -31,4 +36,48 @@ code {
 
 .subject-section {
   height: 15rem;
+}
+
+.tag {
+  background-color: rgba(213, 226, 213, 0.616);
+  border-radius: 5px;
+  margin: 0 0.5rem;
+  padding: 0.25rem;
+}
+
+.list-space {
+  margin: 0.5rem;
+}
+
+.note {
+  padding: 0.5rem;
+  width: 80%;
+}
+
+.student-note {
+  background-color: rgba(243, 243, 179, 0.541);
+}
+
+.hidden {
+  display: none;
+}
+
+.edit-button {
+  margin-left:auto;
+}
+
+.flex-one {
+  flex: 1;
+}
+
+.flex-six {
+  flex: 6;
+}
+
+.flex-more {
+  flex: 15
+}
+
+.space-between {
+  justify-content: space-between;
 }

@@ -1,4 +1,7 @@
 import { Button } from "@material-ui/core"
+import PushPinIcon from '@mui/icons-material/PushPin';
+import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined';
+import EditIcon from '@mui/icons-material/Edit';
 import React, { useEffect, useState } from "react"
 import { useParams, Link } from "react-router-dom"
 import UserRepository from "../../repositories/UserRepository"
@@ -65,7 +68,7 @@ export const StudentProfile = ({ user, thisStudent }) => {
 
 
     return (<>
-        <div className="">
+        <div className="section">
             <h1>{student.user?.first_name} {student.user?.last_name}</h1>
             <p>{student.user?.email}</p>
             <p>{student.bio}</p>
@@ -93,43 +96,49 @@ export const StudentProfile = ({ user, thisStudent }) => {
 
         </div>
 
-        <div>
+        <div className="section">
             {
                 student.scores?.length
                     ? <>
                         <ScoresTable thisStudent={student} newInfo={newInfo} />
-                        <Button onClick={() => {
-                            if (user.user?.is_staff) {
-                                history.push(`/student-scores/${student.id}`)
-                            } else {
-                                history.push(`/my-scores`)
-                            }
-                        }}>View All Scores</Button>
+                        <div className="item space-between">
+                            <Button onClick={() => {
+                                if (user.user?.is_staff) {
+                                    history.push(`/student-scores/${student.id}`)
+                                } else {
+                                    history.push(`/my-scores`)
+                                }
+                            }}>View All Scores</Button>
+                            <Button onClick={toggleScoreForm}>Add Score(s) +</Button>
+                        </div>
                     </>
-                    : ""
+                    : <div>
+
+                        <Button onClick={toggleScoreForm}>Add Score(s) +</Button>
+                    </div>
             }
 
-            <Button onClick={toggleScoreForm}>Add Score(s) +</Button>
+            {/* <Button onClick={toggleScoreForm}>Add Score(s) +</Button> */}
 
         </div>
 
         {
             viewer.user?.is_staff
-                ? <div>
+                ? <div className="section">
                     <div className="item">
                         <p>Focus Areas</p>
-                        {viewer.id === student.tutor_id ? <Button onClick={() => { history.push(`/focus-areas/${student.id}`) }}>Manage Areas</Button> : ""}
+                        {viewer.id === student.tutor_id ? <Button onClick={() => { history.push(`/focus-areas/${student.id}`) }}>Manage</Button> : ""}
                     </div>
 
                     {
                         subjects.map(subject => {
                             return <div key={subject.id} className="item">
-                                <div>{subject.subject}: </div>
-                                <div className="item">
+                                <div className="flex-one">{subject.subject}: </div>
+                                <div className="item list-space flex-more">
                                     {
                                         student.focus_areas?.map(area => {
                                             if (area.subject.id === subject.id) {
-                                                return <div key={area.id}>{area.name}</div>
+                                                return <div className="tag" key={area.id}>{area.name}</div>
                                             } else return false
                                         })
                                     }
@@ -145,28 +154,31 @@ export const StudentProfile = ({ user, thisStudent }) => {
 
         {viewer.id === student.tutor_id ? <Button onClick={() => { history.push(`/tests/${student.id}`) }}>Practice Tests</Button> : ""}
 
-        <div>
+        <div className="section">
 
             <div>Notes</div>
-            <Button onClick={() => {
-                setEditNote({})
-                toggleNoteForm()
-            }}>Add Note +</Button>
+            <Button
+                onClick={() => {
+                    setEditNote({})
+                    toggleNoteForm()
+                }}>Add Note +</Button>
             {
                 student.notes?.map(note => {
-                    return <div key={note.id} className={note.author === student.id ? "student-note item" : "item"}>
+                    return <div key={note.id}
+                        className={note.author.id === student.id ? "student-note item note" : viewer.user?.is_staff ? "item note" : "hidden"}>
 
-                        {viewer.id === student.tutor_id ? <Button onClick={() => { pinNote(note.id) }}>Pin Note?</Button> : ""}
+                        {viewer.id === student.tutor_id ? <Button onClick={() => { pinNote(note.id) }}>{note.pinned ? <PushPinIcon /> : <PushPinOutlinedIcon />}</Button> : ""}
 
-                        <div>{note.pinned ? "**" : ""}{note.date}</div>
-                        <div>{note.note}</div>
+                        <div className="flex-one">{note.date}</div>
+                        <div className="flex-six">{note.note}</div>
 
                         {
                             note.author?.id === user.id
-                                ? <button onClick={() => {
-                                    setEditNote(note)
-                                    toggleNoteForm()
-                                }}><Settings /></button>
+                                ? <button className="edit-button"
+                                    onClick={() => {
+                                        setEditNote(note)
+                                        toggleNoteForm()
+                                    }}><EditIcon /></button>
                                 : ""
                         }
                     </div>

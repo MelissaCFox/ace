@@ -20,7 +20,7 @@ export const NoteForm = ({ toggleNoteForm, alertNewInfo, student, editNote, curr
 
     useEffect(() => {
         TestRepository.getAll().then(setTests)
-    },[])
+    }, [])
 
     useEffect(() => {
         let copy = { ...note }
@@ -105,32 +105,34 @@ export const NoteForm = ({ toggleNoteForm, alertNewInfo, student, editNote, curr
                                                 student?.tests?.map(test => <option key={test.id} value={student.tests.indexOf(test)}>{test.test?.name}</option>)
                                             }
                                         </Input>
-                                        
+
                                         <Input type="select"
-                                        onChange={(e) => {
-                                            if (e.target.value !== "") {
-                                                setTestFormTest(tests[parseInt(e.target.value)])
-                                            } else {
-                                                setTestFormTest({})
-                                            }
-                                        }}
+                                            onChange={(e) => {
+                                                if (e.target.value !== "") {
+                                                    setTestFormTest(tests[parseInt(e.target.value)])
+                                                } else {
+                                                    setTestFormTest({})
+                                                }
+                                            }}
                                         >
                                             <option value="">Start New Test</option>
                                             {
                                                 tests.filter(test => !student.tests.find(st => st.test.id === test.id)).map(test => {
-                                                return <option value={tests.indexOf(test)}>{test.name}</option>
-                                            })
+                                                    return <option key={test.id} value={tests.indexOf(test)}>{test.name}</option>
+                                                })
                                             }
                                         </Input>
 
                                     </div>
-                                    {
-                                        testFormTest.test
-                                            ? <StudentTestForm thisTest={testFormTest} setTestFormTest={setTestFormTest} noteForm={true} />
-                                            : testFormTest.num_sci
-                                                ? <StudentTestForm blank={testFormTest} studentId={student.id} setTestFormTest={setTestFormTest} noteForm={true} />
-                                                : ""
-                                    }
+                                    <div>
+                                        {
+                                            testFormTest.test
+                                                ? <StudentTestForm thisTest={testFormTest} setTestFormTest={setTestFormTest} noteForm={true} />
+                                                : testFormTest.num_sci
+                                                    ? <StudentTestForm blank={testFormTest} studentId={student.id} setTestFormTest={setTestFormTest} noteForm={true} />
+                                                    : ""
+                                        }
+                                    </div>
                                 </div>
                                 : ""
                         }

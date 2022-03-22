@@ -1,10 +1,10 @@
 import { Button } from "@material-ui/core"
 import React, { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import UserRepository from "../../repositories/UserRepository"
 import SubjectRepository from "../../repositories/SubjectRepository"
 import { StudentForm } from "../Forms/StudentForm"
-import { Modal, ModalBody, ModalHeader, Table } from 'reactstrap';
+import { Modal, ModalBody, ModalHeader } from 'reactstrap';
 import { Settings } from "@material-ui/icons"
 import { NoteForm } from "../Forms/NoteForm"
 import NoteRepository from "../../repositories/NoteRepository"
@@ -67,12 +67,17 @@ export const StudentProfile = ({ user, thisStudent }) => {
     return (<>
         <div className="">
             <h1>{student.user?.first_name} {student.user?.last_name}</h1>
-            <h3>{student.user?.email}</h3>
+            <p>{student.user?.email}</p>
             <p>{student.bio}</p>
-            {/* <p>Tutor: {user.tutor_id}</p> */}
             <div> Tutor(s):
                 <div className="item">
-
+                    {
+                        student.tutors?.map(pair => {
+                            return <div key={pair.id}>
+                                <Link to={`/tutor/${pair.tutor.id}`}>{pair.tutor.user?.first_name} {pair.tutor.user?.last_name}</Link>
+                            </div>
+                        })
+                    }
                 </div>
             </div>
             <div className="item"> Schedule:
@@ -123,7 +128,7 @@ export const StudentProfile = ({ user, thisStudent }) => {
                                 <div className="item">
                                     {
                                         student.focus_areas?.map(area => {
-                                            if (area.subject === subject.id) {
+                                            if (area.subject.id === subject.id) {
                                                 return <div key={area.id}>{area.name}</div>
                                             } else return false
                                         })
@@ -138,7 +143,7 @@ export const StudentProfile = ({ user, thisStudent }) => {
                 : ""
         }
 
-        <Button onClick={() => { history.push(`/tests/${student.id}`) }}>Practice Tests</Button>
+        {viewer.id === student.tutor_id ? <Button onClick={() => { history.push(`/tests/${student.id}`) }}>Practice Tests</Button> : ""}
 
         <div>
 
@@ -150,7 +155,9 @@ export const StudentProfile = ({ user, thisStudent }) => {
             {
                 student.notes?.map(note => {
                     return <div key={note.id} className={note.author === student.id ? "student-note item" : "item"}>
-                        <Button onClick={() => { pinNote(note.id) }}>Pin Note?</Button>
+
+                        {viewer.id === student.tutor_id ? <Button onClick={() => { pinNote(note.id) }}>Pin Note?</Button> : ""}
+
                         <div>{note.pinned ? "**" : ""}{note.date}</div>
                         <div>{note.note}</div>
 

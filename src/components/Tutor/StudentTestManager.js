@@ -77,7 +77,7 @@ export const StudentTestManager = ({ user }) => {
                                     <div className="">
                                         {
                                             tests.filter((test) => !studentTests.find(st => st.test?.id === test.id)).map(test => {
-                                                if (startTest.id === test.id) {
+                                                if (startTest.num_sci && startTest.id === test.id) {
                                                     return <div key={test.id} className="item test-section">
                                                         <StudentTestForm blank={test} alertNewInfo={alertNewInfo} studentId={student.id} setStartTest={setStartTest} />
                                                     </div>
@@ -98,7 +98,7 @@ export const StudentTestManager = ({ user }) => {
                                     <div className="">
                                         {
                                             studentTests.filter(test => test.completion.overall === 1.0).map(test => {
-                                                if (startTest.id === test.id) {
+                                                if (startTest.english && startTest.id === test.id) {
                                                     return <div key={test.id} className="item test-section">
                                                         <StudentTestForm thisTest={test} alertNewInfo={alertNewInfo} setStartTest={setStartTest} />
                                                     </div>

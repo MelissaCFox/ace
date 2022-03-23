@@ -28,6 +28,7 @@ export const Schedule = ({ user }) => {
                 {
                     days.map((day) => {
                         let dayStudents = students.filter(student => student.day.id === day.id)
+                        dayStudents.sort((a,b) => a.start_time.split(":").join("") - b.start_time.split(":").join(""))
                         return <div key={day.id}>
                             <h3>{day.day}</h3>
                             <div>

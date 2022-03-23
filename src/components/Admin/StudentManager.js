@@ -25,18 +25,26 @@ export const StudentManager = ({currentUser}) => {
         UserRepository.getStudents().then(r => {
             setAllStudents(r)
             if (filter) {
-                filterStudents()
+                filterStudents(r)
             } else {
                 setStudents(r)
             }
-         })
+        })
         UserRepository.getTutors().then((r) => setTutors(r.filter(tutor => !tutor.user.is_superuser)))
         UserRepository.getPairs().then(setPairs)
     }, [newInfo])
 
+    useEffect(() => {
+        filterStudents()
+    },[filter])
 
-    const filterStudents = () => {
-        let students = [...allStudents]
+    const filterStudents = (response) => {
+        let students = []
+        if (response) {
+            students = response
+        } else {
+            students = [...allStudents]
+        }
         if (filter === "unassigned") {
             students = students.filter(student => student.unassigned === true)
         } else if (filter === "assigned") {
@@ -77,8 +85,8 @@ export const StudentManager = ({currentUser}) => {
 
             <select onChange={(e) => {
                 setFilter(e.target.value)
-                filterStudents()
-                }}>
+                }}
+                value={filter}>
                 <option value="">All</option>
                 <option value="assigned">Assigned</option>
                 <option value="unassigned">Unassigned</option>

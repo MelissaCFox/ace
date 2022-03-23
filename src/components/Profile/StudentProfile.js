@@ -41,12 +41,14 @@ export const StudentProfile = ({ user, thisStudent }) => {
     useEffect(() => {
         if (firstView) {
             if (thisStudent?.notes) {
+                thisStudent.notes?.reverse()
                 thisStudent.notes?.sort((a, b) => b.pinned - a.pinned)
                 setStudent(thisStudent)
                 setFirstView(false)
             }
             else if (studentId) {
                 UserRepository.get(studentId).then((r) => {
+                    r.notes?.reverse()
                     r.notes?.sort((a, b) => b.pinned - a.pinned)
                     setStudent(r)
                 })
@@ -54,6 +56,7 @@ export const StudentProfile = ({ user, thisStudent }) => {
             }
         } else if (student.notes) {
             UserRepository.get(student.id).then((r) => {
+                r.notes?.reverse()
                 r.notes?.sort((a, b) => b.pinned - a.pinned)
                 setStudent(r)
             })

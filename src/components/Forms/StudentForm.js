@@ -78,7 +78,7 @@ export const StudentForm = ({ edit, alertNewInfo, toggleForm, currentUser }) => 
 
         <Form>
             <InputGroup className="">
-                <InputGroupText className="label">First Name</InputGroupText>
+                <InputGroupText className="label profile-form-label">First Name</InputGroupText>
                 <Input required type="text" className="" name="firstName" placeholder="First Name"
                     defaultValue={student.firstName}
                     readOnly={edit?.bio}
@@ -89,7 +89,7 @@ export const StudentForm = ({ edit, alertNewInfo, toggleForm, currentUser }) => 
                     }} />
             </InputGroup>
             <InputGroup className="">
-                <InputGroupText className="label">Last Name</InputGroupText>
+                <InputGroupText className="label profile-form-label">Last Name</InputGroupText>
                 <Input required type="text" className="" name="lastName" placeholder="Last Name"
                     defaultValue={student.lastName}
                     readOnly={edit?.bio}
@@ -100,7 +100,7 @@ export const StudentForm = ({ edit, alertNewInfo, toggleForm, currentUser }) => 
                     }} />
             </InputGroup>
             <InputGroup className="">
-                <InputGroupText className="label">Email</InputGroupText>
+                <InputGroupText className="label profile-form-label">Email</InputGroupText>
                 <Input required type="text" className="" name="email" placeholder="Email"
                     defaultValue={student.email}
                     readOnly={disableEdit.tutor || disableEdit.admin}
@@ -111,7 +111,7 @@ export const StudentForm = ({ edit, alertNewInfo, toggleForm, currentUser }) => 
                     }} />
             </InputGroup>
             <InputGroup className="">
-                <InputGroupText className="label">Username</InputGroupText>
+                <InputGroupText className="label profile-form-label">Username</InputGroupText>
                 <Input required type="text" className="" name="username" placeholder="Username"
                     defaultValue={student.username}
                     readOnly={edit?.bio}
@@ -122,7 +122,7 @@ export const StudentForm = ({ edit, alertNewInfo, toggleForm, currentUser }) => 
                     }} />
             </InputGroup>
             <InputGroup className="">
-                <InputGroupText className="label">Password</InputGroupText>
+                <InputGroupText className="label profile-form-label">Password</InputGroupText>
                 <Input required type="password" className="" name="password" placeholder="Password"
                     readOnly={disableEdit.tutor || disableEdit.admin}
                     onChange={(e) => {
@@ -132,7 +132,7 @@ export const StudentForm = ({ edit, alertNewInfo, toggleForm, currentUser }) => 
                     }} />
             </InputGroup>
             <InputGroup className="">
-                <InputGroupText className="label">Verify Password</InputGroupText>
+                <InputGroupText className="label profile-form-label">Verify Password</InputGroupText>
                 <Input required type="password" className="" name="verifyPassword" placeholder="Verify Password"
                     readOnly={disableEdit.tutor || disableEdit.admin}
                     onChange={(e) => {
@@ -141,8 +141,8 @@ export const StudentForm = ({ edit, alertNewInfo, toggleForm, currentUser }) => 
                         setStudent(copy)
                     }} />
             </InputGroup>
-            <InputGroup className="">
-                <InputGroupText className="label">Bio</InputGroupText>
+            <InputGroup className=""> 
+                <InputGroupText className="label profile-form-label">Bio</InputGroupText>
                 <Input required type="textarea" className="" name="bio" placeholder="Bio"
                     defaultValue={student.bio}
                     onChange={(e) => {
@@ -152,7 +152,7 @@ export const StudentForm = ({ edit, alertNewInfo, toggleForm, currentUser }) => 
                     }} />
             </InputGroup>
             <InputGroup className="">
-                <InputGroupText className="label">Parent Name</InputGroupText>
+                <InputGroupText className="label profile-form-label">Parent Name</InputGroupText>
                 <Input required type="text" className="" name="parentName" placeholder="Parent Name"
                     defaultValue={student.parentName}
                     readOnly={disableEdit.tutor || disableEdit.student}
@@ -163,7 +163,7 @@ export const StudentForm = ({ edit, alertNewInfo, toggleForm, currentUser }) => 
                     }} />
             </InputGroup>
             <InputGroup className="">
-                <InputGroupText className="label">Parent Email</InputGroupText>
+                <InputGroupText className="label profile-form-label">Parent Email</InputGroupText>
                 <Input required type="text" className="" name="parentEmail" placeholder="Parent Email"
                     defaultValue={student.parentEmail}
                     readOnly={disableEdit.tutor || disableEdit.student}
@@ -175,7 +175,7 @@ export const StudentForm = ({ edit, alertNewInfo, toggleForm, currentUser }) => 
             </InputGroup>
 
             <InputGroup className="">
-                <InputGroupText className="label">Day of the Week</InputGroupText>
+                <InputGroupText className="label profile-form-label">Day of the Week</InputGroupText>
                 <Input required type="select" className="" name="dayId"
                     value={student.dayId}
                     disabled={disableEdit.admin || disableEdit.student}
@@ -194,7 +194,7 @@ export const StudentForm = ({ edit, alertNewInfo, toggleForm, currentUser }) => 
             </InputGroup>
 
             <InputGroup className="">
-                <InputGroupText className="label">Start Time</InputGroupText>
+                <InputGroupText className="label profile-form-label">Start Time</InputGroupText>
                 <Input required type="time" className="" name="startTime"
                     defaultValue={student.startTime}
                     readOnly={disableEdit.admin || disableEdit.student}
@@ -207,7 +207,7 @@ export const StudentForm = ({ edit, alertNewInfo, toggleForm, currentUser }) => 
             </InputGroup>
 
             <InputGroup className="">
-                <InputGroupText className="label">End Time</InputGroupText>
+                <InputGroupText className="label profile-form-label">End Time</InputGroupText>
                 <Input required type="time" className="" name="endTime"
                     defaultValue={student.endTime}
                     readOnly={disableEdit.admin || disableEdit.student}

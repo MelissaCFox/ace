@@ -37,13 +37,13 @@ export const StudentTestForm = ({ alertNewInfo, thisTest, blank, studentId, setS
         if (blank) {
             test.testId = blank.id
             test.studentId = studentId
-                TestRepository.addStudentTest(test).then(() => {
-                    if (noteForm) {
-                        setTestFormTest({})
-                    } else {
-                        alertNewInfo()
-                    }
-                })
+            TestRepository.addStudentTest(test).then(() => {
+                if (noteForm) {
+                    setTestFormTest({})
+                } else {
+                    alertNewInfo()
+                }
+            })
         } else {
             TestRepository.updateStudentTest(thisTest.id, test).then(() => {
                 if (noteForm) {
@@ -116,103 +116,107 @@ export const StudentTestForm = ({ alertNewInfo, thisTest, blank, studentId, setS
 
     return (
 
-        <Form className="">
+        <Form className="form-item item">
 
-            <div className="item"><h3>{blank ? blank.name : thisTest.test?.name}</h3> <p>{thisTest?.test? `Updated: ${thisTest?.updated}` : ""}</p>  </div>
+            <div className="stack test-name">
+                <h3>{blank ? blank.name : thisTest.test?.name}</h3>
+                <p>{thisTest?.test ? `Updated: ${thisTest?.updated}` : ""}</p>
+            </div>
 
-            <div className="item">
-                <p>English</p>
+            <div className="test-content">
                 <div className="item">
-                    {
-                        english.map((section, index) => {
-                            return <div key={index + 1}>
-                                <FormGroup check>
-                                    <Label check>
-                                        <Input type="checkbox" value={section}
-                                            checked={section === "1"}
-                                            onChange={() => { handleCheck("english", index) }}
-                                        />
-                                        {index + 1}
-                                    </Label>
-                                </FormGroup>
-                            </div>
-                        })
-                    }
+                    <p className="label">English</p>
+                    <div className="item">
+                        {
+                            english.map((section, index) => {
+                                return <div className="checkbox" key={index + 1}>
+                                    <FormGroup check className="checkbox">
+                                        <Label check>
+                                            <Input type="checkbox" value={section}
+                                                checked={section === "1"}
+                                                onChange={() => { handleCheck("english", index) }}
+                                            />
+                                            {index + 1}
+                                        </Label>
+                                    </FormGroup>
+                                </div>
+                            })
+                        }
+                    </div>
                 </div>
-            </div>
 
-            <div className="item">
-                <p>Math</p>
                 <div className="item">
-                    {
-                        math.map((section, index) => {
-                            return <div key={index + 1}>
-                                <FormGroup check>
-                                    <Label check>
-                                        <Input type="checkbox" value={section}
-                                            checked={section === "1"}
-                                            onChange={() => { handleCheck("math", index) }}
-                                        />
-                                        {index + 1}
-                                    </Label>
-                                </FormGroup>
-                            </div>
-                        })
-                    }
+                    <p className="label">Math</p>
+                    <div className="item">
+                        {
+                            math.map((section, index) => {
+                                return <div className="checkbox" key={index + 1}>
+                                    <FormGroup check>
+                                        <Label check>
+                                            <Input type="checkbox" value={section}
+                                                checked={section === "1"}
+                                                onChange={() => { handleCheck("math", index) }}
+                                            />
+                                            {index + 1}
+                                        </Label>
+                                    </FormGroup>
+                                </div>
+                            })
+                        }
+                    </div>
                 </div>
-            </div>
 
-            <div className="item">
-                <p>Reading</p>
                 <div className="item">
-                    {
-                        reading.map((section, index) => {
-                            return <div key={index + 1}>
-                                <FormGroup check>
-                                    <Label check>
-                                        <Input type="checkbox" value={section}
-                                            checked={section === "1"}
-                                            onChange={() => { handleCheck("reading", index) }}
-                                        />
-                                        {index + 1}
-                                    </Label>
-                                </FormGroup>
-                            </div>
-                        })
-                    }
+                    <p className="label">Reading</p>
+                    <div className="item">
+                        {
+                            reading.map((section, index) => {
+                                return <div className="checkbox" key={index + 1}>
+                                    <FormGroup check>
+                                        <Label check>
+                                            <Input type="checkbox" value={section}
+                                                checked={section === "1"}
+                                                onChange={() => { handleCheck("reading", index) }}
+                                            />
+                                            {index + 1}
+                                        </Label>
+                                    </FormGroup>
+                                </div>
+                            })
+                        }
+                    </div>
                 </div>
-            </div>
 
-            <div className="item">
-                <p>Science</p>
                 <div className="item">
-                    {
-                        science.map((section, index) => {
-                            return <div key={index + 1}>
-                                <FormGroup check>
-                                    <Label check>
-                                        <Input type="checkbox" value={section}
-                                            checked={section === "1"}
-                                            onChange={() => { handleCheck("science", index) }}
-                                        />
-                                        {index + 1}
-                                    </Label>
-                                </FormGroup>
-                            </div>
-                        })
-                    }
+                    <p className="label">Science</p>
+                    <div className="item">
+                        {
+                            science.map((section, index) => {
+                                return <div className="checkbox" key={index + 1}>
+                                    <FormGroup check>
+                                        <Label check>
+                                            <Input type="checkbox" value={section}
+                                                checked={section === "1"}
+                                                onChange={() => { handleCheck("science", index) }}
+                                            />
+                                            {index + 1}
+                                        </Label>
+                                    </FormGroup>
+                                </div>
+                            })
+                        }
+                    </div>
+                </div>
+
+                <div className="item space-between buttons">
+                    <div className="stack">
+                        <Button outline size="sm" color="success" onClick={selectAll}>Select All</Button>
+                        <Button outline size="sm" color="success" onClick={clearAll}>Clear All</Button>
+                    </div>
+                    {setStartTest ? <Button className="form-btn" outline onClick={setStartTest}>Cancel</Button> : ""}
+                    <Button className="form-btn" color="success" onClick={updateTest}>{blank ? "Add" : "Update"}</Button>
                 </div>
             </div>
-
-            <div className="item">
-                <div className="stack">
-                    <Button onClick={selectAll}>Select All</Button>
-                    <Button onClick={clearAll}>Clear All</Button>
-                </div>
-                {setStartTest ? <Button onClick={setStartTest}>Cancel</Button> : ""}
-                <Button onClick={updateTest}>{blank ? "Add" : "Update"}</Button>
-            </div>
-
         </Form>
 
 

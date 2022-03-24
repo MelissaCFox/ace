@@ -24,14 +24,14 @@ export const Schedule = ({ user }) => {
     return (<>
         <div className="container">
 
-            <div className="days">
+            <div className="days item space-between">
                 {
                     days.map((day) => {
-                        let dayStudents = students.filter(student => student.day.id === day.id)
+                        let dayStudents = students.sort((a,b) => a.start_time.split(":").join("") - b.start_time.split(":").join("")).filter(student => student.day.id === day.id)
                         return <div key={day.id}>
-                            <h3>{day.day}</h3>
+                            <h3 className="heading">{day.day}</h3>
                             <div>
-                                <StudentList dayStudents={dayStudents} />
+                                <StudentList dayStudents={dayStudents} schedule={true} />
                             </div>
                         </div>
                     })

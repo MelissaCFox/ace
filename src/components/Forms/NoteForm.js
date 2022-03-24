@@ -64,7 +64,7 @@ export const NoteForm = ({ toggleNoteForm, alertNewInfo, student, editNote, curr
 
         <Form className="">
 
-            <Input className="" type="textarea" name="note" defaultValue={note.note} placeholder="Note"
+            <Input className="textarea" type="textarea" name="note" defaultValue={note.note} placeholder="Note"
                 onChange={(e) => {
                     const copy = { ...note }
                     copy.note = e.target.value
@@ -78,7 +78,7 @@ export const NoteForm = ({ toggleNoteForm, alertNewInfo, student, editNote, curr
                     : <>
                         <FormGroup check>
                             <Label check>
-                                <Input type="checkbox" checked={note.pinned ? "checked" : ""} onChange={() => {
+                                <Input  type="checkbox" checked={note.pinned ? "checked" : ""} onChange={() => {
                                     const copy = { ...note }
                                     copy.pinned = !copy.pinned
                                     setNote(copy)
@@ -92,6 +92,7 @@ export const NoteForm = ({ toggleNoteForm, alertNewInfo, student, editNote, curr
                                 ? <div>
                                     <div className="item">
                                         <Input type="select"
+                                            value={testFormTest.id ? testFormTest.id : ""}
                                             onChange={(e) => {
                                                 if (e.target.value !== "") {
                                                     setTestFormTest(student.tests[parseInt(e.target.value)])
@@ -107,6 +108,7 @@ export const NoteForm = ({ toggleNoteForm, alertNewInfo, student, editNote, curr
                                         </Input>
 
                                         <Input type="select"
+                                            value={testFormTest.id ? testFormTest.id : ""}
                                             onChange={(e) => {
                                                 if (e.target.value !== "") {
                                                     setTestFormTest(tests[parseInt(e.target.value)])
@@ -127,9 +129,15 @@ export const NoteForm = ({ toggleNoteForm, alertNewInfo, student, editNote, curr
                                     <div>
                                         {
                                             testFormTest.test
-                                                ? <StudentTestForm thisTest={testFormTest} setTestFormTest={setTestFormTest} noteForm={true} />
+                                                ? <div className="item">
+                                                    <StudentTestForm thisTest={testFormTest} setTestFormTest={setTestFormTest} noteForm={true} />
+                                                    <Button outline onClick={()=>{setTestFormTest({})}}>Cancel</Button>
+                                                </div>
                                                 : testFormTest.num_sci
-                                                    ? <StudentTestForm blank={testFormTest} studentId={student.id} setTestFormTest={setTestFormTest} noteForm={true} />
+                                                    ? <div className="item">
+                                                        <StudentTestForm blank={testFormTest} studentId={student.id} setTestFormTest={setTestFormTest} noteForm={true} />
+                                                        <Button outline onClick={()=>{setTestFormTest({})}}>Cancel</Button>
+                                                    </div>
                                                     : ""
                                         }
                                     </div>

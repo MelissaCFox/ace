@@ -28,12 +28,6 @@ export const ScoresTable = ({ thisStudent, newInfo }) => {
         }
     }, [thisStudent])
 
-    useEffect(() => {
-        if (newInfo) {
-            // get latest superscore data from student and setSuperScore
-        }
-    },[])
-
     if (firstTest) {
 
     return (<>

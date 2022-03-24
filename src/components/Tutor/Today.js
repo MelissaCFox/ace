@@ -5,7 +5,7 @@ import { Input } from "reactstrap"
 import UserRepository from "../../repositories/UserRepository"
 
 
-export const Today = ({user}) => {
+export const Today = ({ user }) => {
     const [allStudents, setAllStudents] = useState([])
     const [students, setStudents] = useState([])
     const [newInfo, setNewInfo] = useState(false)
@@ -17,12 +17,9 @@ export const Today = ({user}) => {
             if (day === 6) {
                 day = day - 5
             } else {
-                //!! For some reason the dates are off when grabbing current new Date
-                //! versus passing in a date as an argument... new Date() is returning the correct
-                //! date and time though... look into more
                 day = day + 1
             }
-            r.sort((a,b) => a.start_time - b.start_time)
+            r.sort((a, b) => a.start_time - b.start_time)
             setAllStudents(r.filter(s => s.tutor_id === user?.user?.id))
             setStudents(r.filter(s => s.tutor_id === user?.user?.id && s.day.id === day))
         })
@@ -30,8 +27,8 @@ export const Today = ({user}) => {
 
     const changeDate = (event) => {
         let date = event.target.value
-        let day = new  Date(date).getDay()
-        if (day === 6){
+        let day = new Date(date).getDay()
+        if (day === 6) {
             day = day - 5
         } else {
             day = day + 2
@@ -42,14 +39,20 @@ export const Today = ({user}) => {
 
     return (<>
         <div className="">
-            <Input type="date" onChange={changeDate} />
+            <div className="item">
+                <h2>Students on the Schedule</h2>
+                <Input type="date" onChange={changeDate} />
+            </div>
 
             <div className="students">
                 {
-                    students.map((student) => {
-                        return <div key={student.id}>
-                            <Link to={`/student/${student.id}`}> {student.user?.first_name} {student.user?.last_name} </Link>
-                            
+                    students.filter(student => student.user?.is_active).sort((a, b) => a.start_time.split(":").join("") - b.start_time.split(":").join("")).map((student) => {
+                        let startTime = student.start_time.slice(0, -3)
+                        let endTime = student.end_time.slice(0, -3)
+                        return <div className="single-student item" key={student.id}>
+                            <div className="flex-one">{startTime}-{endTime}</div>
+                            <Link className="flex-six" to={`/student/${student.id}`}> {student.user?.first_name} {student.user?.last_name} </Link>
+
                         </div>
                     })
                 }

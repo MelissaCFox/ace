@@ -1,7 +1,9 @@
 import { Button } from "@material-ui/core"
 import PushPinIcon from '@mui/icons-material/PushPin';
 import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined';
+import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
+import SettingsIcon from '@mui/icons-material/Settings';
 import React, { useEffect, useState } from "react"
 import { useParams, Link } from "react-router-dom"
 import UserRepository from "../../repositories/UserRepository"
@@ -72,14 +74,17 @@ export const StudentProfile = ({ user, thisStudent }) => {
 
     return (<>
         <div className="section">
-            <h1>{student.user?.first_name} {student.user?.last_name}</h1>
+            <div className="item">
+                <h1>{student.user?.first_name} {student.user?.last_name}</h1>
+                <p>{student.user?.is_active ? "" : "*Not Active"}</p>
+            </div>
             <p>{student.user?.email}</p>
             <p>{student.bio}</p>
-            <div> Tutor(s):
+            <div className="item"> Tutor(s):
                 <div className="item">
                     {
                         student.tutors?.map(pair => {
-                            return <div key={pair.id}>
+                            return <div className="spacing" key={pair.id}>
                                 <Link to={`/tutor/${pair.tutor.id}`}>{pair.tutor.user?.first_name} {pair.tutor.user?.last_name}</Link>
                             </div>
                         })
@@ -87,12 +92,12 @@ export const StudentProfile = ({ user, thisStudent }) => {
                 </div>
             </div>
             <div className="item"> Schedule:
-                <p>{student.day?.day}s</p>
-                <p>{student.start_time} - {student.end_time}</p>
+                <p className="spacing">{student.day?.day}s</p>
+                <p className="spacing">{student.start_time} - {student.end_time}</p>
             </div>
             <div className="item">Parent Info:
-                <p>{student.parent_name}</p>
-                <p>{student.parent_email}</p>
+                <p className="spacing">{student.parent_name}</p>
+                <p className="spacing"><a href={`mailto:${student.parent_email}`}>{student.parent_email}</a></p>
             </div>
 
             {user ? <Button onClick={toggleForm}>Edit Profile</Button> : ""}
@@ -121,16 +126,18 @@ export const StudentProfile = ({ user, thisStudent }) => {
                     </div>
             }
 
-            {/* <Button onClick={toggleScoreForm}>Add Score(s) +</Button> */}
-
         </div>
 
         {
             viewer.user?.is_staff
                 ? <div className="section">
                     <div className="item">
-                        <p>Focus Areas</p>
-                        {viewer.id === student.tutor_id ? <Button onClick={() => { history.push(`/focus-areas/${student.id}`) }}>Manage</Button> : ""}
+                        <h2>Focus Areas</h2>
+                        {
+                            viewer.id === student.tutor_id
+                                ? <Button onClick={() => { history.push(`/focus-areas/${student.id}`) }}> <SettingsIcon /> </Button>
+                                : ""
+                        }
                     </div>
 
                     {
@@ -150,21 +157,32 @@ export const StudentProfile = ({ user, thisStudent }) => {
                         })
 
                     }
+                    {
+                        viewer.id === student.tutor_id
+                            ? <Button className="practice-test-btn"
+                                size="large"
+                                onClick={() => { history.push(`/tests/${student.id}`) }}
+                            >Practice Tests
+                            </Button>
+                            : ""
+                    }
 
                 </div>
                 : ""
         }
 
-        {viewer.id === student.tutor_id ? <Button onClick={() => { history.push(`/tests/${student.id}`) }}>Practice Tests</Button> : ""}
 
         <div className="section">
 
-            <div>Notes</div>
-            <Button
-                onClick={() => {
+            <div className="item">
+                <h2>Notes</h2>
+                <Button onClick={() => {
                     setEditNote({})
                     toggleNoteForm()
-                }}>Add Note +</Button>
+                }}>
+                    <AddIcon />
+                </Button>
+            </div>
             {
                 student.notes?.map(note => {
                     return <div key={note.id}
@@ -177,11 +195,11 @@ export const StudentProfile = ({ user, thisStudent }) => {
 
                         {
                             note.author?.id === user.id
-                                ? <button className="edit-button"
+                                ? <Button className="edit-button"
                                     onClick={() => {
                                         setEditNote(note)
                                         toggleNoteForm()
-                                    }}><EditIcon /></button>
+                                    }}><EditIcon /></Button>
                                 : ""
                         }
                     </div>
@@ -204,7 +222,7 @@ export const StudentProfile = ({ user, thisStudent }) => {
         <Modal animation="false"
             centered
             fullscreen="md"
-            size="md"
+            size="lg"
             toggle={toggleNoteForm}
             isOpen={noteForm}>
             <ModalHeader>Note for {student.user?.first_name} {student.user?.last_name}</ModalHeader>

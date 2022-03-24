@@ -1,7 +1,6 @@
-import { Button } from "@material-ui/core";
 import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom";
-import { FormGroup, Input, Label } from "reactstrap";
+import { Button, FormGroup, Input, Label } from "reactstrap";
 import SubjectRepository from "../../repositories/SubjectRepository";
 import UserRepository from '../../repositories/UserRepository';
 
@@ -48,39 +47,43 @@ export const FocusAreaManager = ({ user }) => {
         <div className="container">
             {
                 student.user
-                ?student.user?.is_staff
-                    ? ""
-                    : <>
-                        <h2>Focus Areas for {student.user?.first_name} {student.user?.last_name}</h2>
-                        <div className="">
-                            {
-                                subjects.map(subject => {
-                                    return <div key={subject.id} className="item subject-section">
-                                        <div><h2>{subject.subject}</h2></div>
-                                        <div>
-                                            {
-                                                subjectAreas.filter(area => area.subject.id === subject.id).map(area => {
-                                                    return <div key={area.id}>
-                                                        <FormGroup check>
-                                                            <Label check>
-                                                                <Input type="checkbox" value={area.id}
-                                                                    checked={studentAreas.find(areaId => areaId === area.id) ? "checked" : ""}
-                                                                    onChange={handleCheck}
-                                                                />
-                                                                {area.name}
-                                                            </Label>
-                                                        </FormGroup>
-                                                    </div>
-                                                })
-                                            }
+                    ? student.user?.is_staff
+                        ? ""
+                        : <>
+                            <h2>Focus Areas for {student.user?.first_name} {student.user?.last_name}</h2>
+                            <div className="focus-areas">
+                                {
+                                    subjects.map(subject => {
+                                        return <div key={subject.id} className="subject-section">
+                                            <div className="subject-name" >
+                                                <h2 className="">{subject.subject}</h2>
+                                            </div>
+                                            <div className="areas">
+                                                {
+                                                    subjectAreas.filter(area => area.subject.id === subject.id).map(area => {
+                                                        return <div key={area.id}>
+                                                            <FormGroup check>
+                                                                <Label check>
+                                                                    <Input type="checkbox" value={area.id}
+                                                                        checked={studentAreas.find(areaId => areaId === area.id) ? "checked" : ""}
+                                                                        onChange={handleCheck}
+                                                                    />
+                                                                    {area.name}
+                                                                </Label>
+                                                            </FormGroup>
+                                                        </div>
+                                                    })
+                                                }
+                                            </div>
+                                            <div className="update-btn">
+                                                <Button outline color="success" onClick={updateAreas}>Update</Button>
+                                            </div>
                                         </div>
-                                        <Button onClick={updateAreas}>Update</Button>
-                                    </div>
-                                })
-                            }
-                        </div>
+                                    })
+                                }
+                            </div>
                         </>
-                : ""
+                    : ""
             }
 
 

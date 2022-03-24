@@ -17,6 +17,10 @@ code {
   margin: 0 15rem 4rem 15rem;
 }
 
+.profile-form-label {
+  width: 9+rem !important;
+}
+
 .section {
   margin: 1rem 0;
 }
@@ -35,12 +39,25 @@ code {
 }
 
 .subject-section {
-  height: 15rem;
+  display: flex;
+  height: 10rem;
+  border: rgba(119, 119, 119, 0.342) solid 1px;
+  border-radius: 6px;
+  width: 75%
+}
+
+.subject-name {
+  margin: 2rem 0 0 2rem;
 }
 
 .tag {
   background-color: rgba(213, 226, 213, 0.616);
   border-radius: 5px;
+  margin: 0 0.5rem;
+  padding: 0.25rem;
+}
+
+.spacing {
   margin: 0 0.5rem;
   padding: 0.25rem;
 }
@@ -51,7 +68,7 @@ code {
 
 .note {
   padding: 0.5rem;
-  width: 80%;
+  border-bottom: solid black 1px;
 }
 
 .student-note {
@@ -80,4 +97,80 @@ code {
 
 .space-between {
   justify-content: space-between;
+}
+
+.label {
+  width:5rem;
+}
+
+.form-item {
+  border: rgba(119, 119, 119, 0.342) solid 1px;
+  border-radius: 6px;
+  width: 40rem;
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+}
+
+.form-btn {
+  width: 5rem;
+}
+
+.test-name {
+  margin-right: 2rem;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.heading {
+  text-align: center;
+}
+
+.centered {
+  justify-content: center;
+}
+
+.textarea {
+  height: 8rem;
+}
+
+.subject-name {
+  width: 12rem;
+}
+
+.focus-areas {
+  margin-top: 2rem;
+}
+
+.areas {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  height: 8rem;
+  width: 30rem;
+  margin-top: 2rem;
+}
+
+.update-btn {
+  align-self: center;
+}
+
+.checkbox {
+  width: 1rem;
+  margin-right: 2rem;
+}
+
+.test-container {
+  margin: 0 -5rem 0 -5rem !important;
+}
+
+.days {
+  padding-top: 4rem;
+}
+
+.students {
+  margin: 3rem;
+}
+
+.single-student {
+  padding: 1rem;
 }

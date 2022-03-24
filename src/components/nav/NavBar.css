@@ -29,7 +29,7 @@ nav {
 
 .nav-item {
     list-style-type: none;
-
+    padding: 2rem;
 }
 
 .logout-btn {

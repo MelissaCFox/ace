@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Modak&family=Readex+Pro:wght@200;400;700&display=swap');
 
+
 .navbar-item img {
     max-height: 3rem;
  }
@@ -34,12 +35,19 @@ nav {
 
 .logout-btn {
     font-family: "Readex Pro";
-    font-size: 2rem;
+    font-size: 1.5rem;
+    background-color:rgb(136, 178, 189);
+    border-radius: 6px;
+    padding: 0.25rem;
 }
 
 .header {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+}
+
+.item-link {
+    color: rgb(109, 175, 192)
 }
 

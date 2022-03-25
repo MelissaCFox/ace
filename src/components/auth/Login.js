@@ -3,6 +3,7 @@ import useSimpleAuth from "../../repositories/useSimpleAuth";
 import { useHistory } from "react-router-dom";
 import AceLogo from '../../media/ACE.png';
 import "./Login.css"
+import { Button } from "@material-ui/core";
 
 
 const Login = () => {
@@ -45,7 +46,7 @@ const Login = () => {
             <section className="form-container">
                 <form className="form--login" onSubmit={handleLogin}>
                     <h2 className="h3 mb-3 font-weight-normal">Please Sign In</h2>
-                    <fieldset>
+                    <fieldset className="spacing">
                         <label htmlFor="inputUsername"> Username </label>
                         <input type="username" onChange={handleUserInput}
                             id="username"
@@ -53,7 +54,7 @@ const Login = () => {
                             placeholder="username"
                             required autoFocus />
                     </fieldset>
-                    <fieldset>
+                    <fieldset className="spacing">
                         <label htmlFor="inputPassword"> Password </label>
                         <input type="password" onChange={handleUserInput}
                             id="password"
@@ -62,10 +63,10 @@ const Login = () => {
                             required autoFocus />
                     </fieldset>
 
-                    <fieldset>
-                        <button type="submit">
+                    <fieldset className="stack">
+                        <Button type="submit">
                             Sign in
-                        </button>
+                        </Button>
                     </fieldset>
                 </form>
             </section>

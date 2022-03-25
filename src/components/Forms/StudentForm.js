@@ -141,7 +141,7 @@ export const StudentForm = ({ edit, alertNewInfo, toggleForm, currentUser }) => 
                         setStudent(copy)
                     }} />
             </InputGroup>
-            <InputGroup className=""> 
+            <InputGroup className="textarea"> 
                 <InputGroupText className="label profile-form-label">Bio</InputGroupText>
                 <Input required type="textarea" className="" name="bio" placeholder="Bio"
                     defaultValue={student.bio}

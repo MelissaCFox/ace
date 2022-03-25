@@ -12,13 +12,17 @@ code {
     monospace;
 }
 
+h1, h2, h3 {
+  color: rgb(51, 120, 138);
+}
+
 .main-container {
-  padding-top: 9rem;
+  padding-top: 10rem;
   margin: 0 15rem 4rem 15rem;
 }
 
 .profile-form-label {
-  width: 9+rem !important;
+  width: 9rem !important;
 }
 
 .section {
@@ -167,10 +171,98 @@ code {
   padding-top: 4rem;
 }
 
+.day {
+  padding: 1rem;
+  width: 12rem;
+}
+
 .students {
   margin: 3rem;
+  
 }
 
 .single-student {
   padding: 1rem;
+}
+
+.schedule-container {
+  margin: 0 -10rem !important;
+}
+
+.name-btn {
+  width: 10rem;
+  margin: 0.25rem 0;
+}
+
+.full-name-btn {
+  width: 13rem;
+  margin: 0.25rem;
+}
+
+.active {
+  border: solid 1px rgb(83, 165, 80) !important;
+}
+
+.inactive {
+  border: solid 1px rgb(204, 55, 55) !important;
+}
+
+.long-btn {
+  width: 15rem;
+  margin: 0.25rem 0;
+}
+
+.week {
+  margin: 2rem 0;
+  border: 1px solid;
+  border-color: rgba(213, 226, 213, 0.616);
+  border-radius: 5px;
+  justify-content: space-between
+}
+
+.select-filter {
+  width: 10rem;
+  margin: 2rem 0 -2rem 8rem;
+}
+
+.filter {
+  width: 10rem;
+  margin: 1.5rem 0 1rem 1rem;
+}
+
+.tests {
+  margin-top: 1rem;
+  height: 15rem;
+}
+
+.trash-icon {
+  fill: rgb(143, 100, 97) !important;
+}
+
+.photo .profile-photo {
+  height: 20rem;
+}
+
+.tutor-bio {
+  margin: 0 2rem;
+}
+
+.email {
+  font-size:larger;
+}
+
+.bio-text {
+  width: 30rem;
+}
+
+.student-bio {
+  justify-content: space-between;
+}
+
+.student-photo {
+  height: 15rem;
+}
+
+.scores {
+  margin-top: 2rem;
 }

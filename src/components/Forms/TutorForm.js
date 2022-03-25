@@ -50,7 +50,7 @@ export const TutorForm = ({ edit, alertNewInfo, toggleForm, admin, currentUser }
 
         <Form>
             <InputGroup className="">
-                <InputGroupText className="label">First Name</InputGroupText>
+                <InputGroupText className="label profile-form-label">First Name</InputGroupText>
                 <Input required type="text" className="" name="firstName" placeholder="First Name"
                     defaultValue={tutor.firstName}
                     readOnly={edit.user}
@@ -61,7 +61,7 @@ export const TutorForm = ({ edit, alertNewInfo, toggleForm, admin, currentUser }
                     }} />
             </InputGroup>
             <InputGroup className="">
-                <InputGroupText className="label">Last Name</InputGroupText>
+                <InputGroupText className="label profile-form-label">Last Name</InputGroupText>
                 <Input required type="text" className="" name="lastName" placeholder="Last Name"
                     defaultValue={tutor.lastName}
                     readOnly={edit.user}
@@ -72,7 +72,7 @@ export const TutorForm = ({ edit, alertNewInfo, toggleForm, admin, currentUser }
                     }} />
             </InputGroup>
             <InputGroup className="">
-                <InputGroupText className="label">Email</InputGroupText>
+                <InputGroupText className="label profile-form-label">Email</InputGroupText>
                 <Input required type="text" className="" name="email" placeholder="Email"
                     defaultValue={tutor.email}
                     readOnly={edit.user && !currentUser}
@@ -83,7 +83,7 @@ export const TutorForm = ({ edit, alertNewInfo, toggleForm, admin, currentUser }
                     }} />
             </InputGroup>
             <InputGroup className="">
-                <InputGroupText className="label">Username</InputGroupText>
+                <InputGroupText className="label profile-form-label">Username</InputGroupText>
                 <Input required type="text" className="" name="username" placeholder="Username"
                     defaultValue={tutor.username}
                     readOnly={edit.user}
@@ -94,7 +94,7 @@ export const TutorForm = ({ edit, alertNewInfo, toggleForm, admin, currentUser }
                     }} />
             </InputGroup>
             <InputGroup className="">
-                <InputGroupText className="label">Password</InputGroupText>
+                <InputGroupText className="label profile-form-label">Password</InputGroupText>
                 <Input required type="password" className="" name="password" placeholder="Password"
                     readOnly={edit.user && !currentUser}
                     onChange={(e) => {
@@ -104,7 +104,7 @@ export const TutorForm = ({ edit, alertNewInfo, toggleForm, admin, currentUser }
                     }} />
             </InputGroup>
             <InputGroup className="">
-                <InputGroupText className="label">Verify Password</InputGroupText>
+                <InputGroupText className="label profile-form-label">Verify Password</InputGroupText>
                 <Input required type="password" className="" name="verifyPassword" placeholder="Verify Password"
                     readOnly={edit.user && !currentUser}
                     onChange={(e) => {
@@ -113,8 +113,8 @@ export const TutorForm = ({ edit, alertNewInfo, toggleForm, admin, currentUser }
                         setTutor(copy)
                     }} />
             </InputGroup>
-            <InputGroup className="">
-                <InputGroupText className="label">Bio</InputGroupText>
+            <InputGroup className="textarea">
+                <InputGroupText className="label profile-form-label">Bio</InputGroupText>
                 <Input required type="textarea" className="" name="bio" placeholder="Bio"
                     defaultValue={tutor.bio}
                     readOnly={edit.user && !currentUser}
@@ -125,7 +125,7 @@ export const TutorForm = ({ edit, alertNewInfo, toggleForm, admin, currentUser }
                     }} />
             </InputGroup>
             <InputGroup className="">
-                <InputGroupText className="label">Billing Rate</InputGroupText>
+                <InputGroupText className="label profile-form-label">Billing Rate</InputGroupText>
                 <Input required type="number" className="" name="billingRate"
                     min="42"
                     step="0.01"

@@ -1,10 +1,10 @@
 import { Button } from '@material-ui/core';
 import { Settings } from '@material-ui/icons';
 import React, { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
 import UserRepository from "../../repositories/UserRepository"
 import { TutorForm } from '../Forms/TutorForm';
 import { Input, Modal, ModalBody, ModalHeader } from 'reactstrap';
+import { useHistory } from 'react-router-dom';
 
 export const TutorManager = () => {
     const [allTutors, setAllTutors] = useState([])
@@ -12,6 +12,7 @@ export const TutorManager = () => {
     const [form, setForm] = useState(false)
     const toggleForm = () => setForm(!form)
     const [tutorToEdit, setTutorToEdit] = useState({})
+    const history = useHistory()
 
     const [newInfo, setNewInfo] = useState(false)
     const alertNewInfo = () => setNewInfo(!newInfo)
@@ -25,7 +26,7 @@ export const TutorManager = () => {
     }, [newInfo])
 
     const filterTutors = (e) => {
-        let tutors = [... allTutors]
+        let tutors = [...allTutors]
         if (e.target.value === "active") {
             tutors = tutors.filter(t => t.user?.is_active)
         } else if (e.target.value === "inactive") {
@@ -36,7 +37,7 @@ export const TutorManager = () => {
 
     const search = (event) => {
         const term = event.target.value
-        let tutors = [... allTutors]
+        let tutors = [...allTutors]
         if (term === "") {
             setTutors(tutors)
         } else {
@@ -45,7 +46,7 @@ export const TutorManager = () => {
     }
 
     return (<>
-        <div className="container">
+        <div className="container stack">
 
             <Button onClick={() => {
                 setTutorToEdit({})
@@ -54,8 +55,8 @@ export const TutorManager = () => {
 
             <Input type="search" placeholder="Search" onChange={search} />
 
-            <select onChange={filterTutors}>
-                <option value="">All</option>
+            <select className="filter" onChange={filterTutors}>
+                <option value="">All Tutors</option>
                 <option value="active">Active</option>
                 <option value="inactive">Inactive</option>
 
@@ -64,18 +65,24 @@ export const TutorManager = () => {
             <div className="tutors">
                 {
                     tutors.map((tutor) => {
-                        return <div key={tutor.id}>
-                            <Link to={`tutor/${tutor.id}`}>{tutor.user.first_name}</Link> {tutor.unassigned ? " - NOT ASSIGNED" : ""}
-                            <button onClick={() => {
-                                setTutorToEdit(tutor)
-                                toggleForm()
-                            }}><Settings /></button>
+                        return <div className="item spacing" key={tutor.id}>
+                            <Button className={tutor.user?.is_active ? "full-name-btn active" : "full-name-btn inactive"}
+                                onClick={() => history.push(`tutor/${tutor.id}`)}
+                            >
+                                {tutor.user.first_name} {tutor.user.last_name}
+                            </Button>
+
+                            <Button
+                                onClick={() => {
+                                    setTutorToEdit(tutor)
+                                    toggleForm()
+                                }}><Settings /></Button>
                         </div>
                     })
                 }
             </div>
 
-            
+
             <Modal animation="false"
                 centered
                 fullscreen="md"
@@ -84,7 +91,7 @@ export const TutorManager = () => {
                 isOpen={form}>
                 <ModalHeader>{tutorToEdit?.user?.first_name ? `${tutorToEdit?.user?.first_name} ${tutorToEdit?.user?.last_name}` : "Add Tutor"}</ModalHeader>
                 <ModalBody>
-                    <TutorForm edit={tutorToEdit} alertNewInfo={alertNewInfo} toggleForm={toggleForm} admin={true}/>
+                    <TutorForm edit={tutorToEdit} alertNewInfo={alertNewInfo} toggleForm={toggleForm} admin={true} />
                 </ModalBody>
             </Modal>
 

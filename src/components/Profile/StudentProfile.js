@@ -16,6 +16,8 @@ import NoteRepository from "../../repositories/NoteRepository"
 import { useHistory } from "react-router-dom"
 import { ScoreForm } from "../Forms/ScoreForm"
 import { ScoresTable } from "../Student/ScoresTable"
+import Boy from '../../media/boy_fun.png';
+import Girl from '../../media/girl_fun.png';
 
 
 export const StudentProfile = ({ user, thisStudent }) => {
@@ -73,41 +75,64 @@ export const StudentProfile = ({ user, thisStudent }) => {
 
 
     return (<>
-        <div className="section">
-            <div className="item">
-                <h1>{student.user?.first_name} {student.user?.last_name}</h1>
-                <p>{student.user?.is_active ? "" : "*Not Active"}</p>
-            </div>
-            <p>{student.user?.email}</p>
-            <p>{student.bio}</p>
-            <div className="item"> Tutor(s):
+        <div className="section student-bio item">
+            <div className="left">
                 <div className="item">
-                    {
-                        student.tutors?.map(pair => {
-                            return <div className="spacing" key={pair.id}>
-                                <Link to={`/tutor/${pair.tutor.id}`}>{pair.tutor.user?.first_name} {pair.tutor.user?.last_name}</Link>
-                            </div>
-                        })
-                    }
+                    <h1>{student.user?.first_name} {student.user?.last_name}</h1> {user ? <Button onClick={toggleForm}><SettingsIcon /> </Button> : ""}
+                    <p>{student.user?.is_active ? "" : "*Not Active"}</p>
+                </div>
+                <div>{student.user?.email}</div>
+                <div>
+                    <h3>Bio</h3>
+                    <div className="bio-text spacing">{student.bio}</div>
+                </div>
+                <div className="">
+                    <h3 >Parent Info</h3>
+                    <div className="item">
+                        <div className="spacing">{student.parent_name}</div>
+                        <div className="spacing"><a href={`mailto:${student.parent_email}`}>{student.parent_email}</a></div>
+                    </div>
                 </div>
             </div>
-            <div className="item"> Schedule:
-                <p className="spacing">{student.day?.day}s</p>
-                <p className="spacing">{student.start_time} - {student.end_time}</p>
-            </div>
-            <div className="item">Parent Info:
-                <p className="spacing">{student.parent_name}</p>
-                <p className="spacing"><a href={`mailto:${student.parent_email}`}>{student.parent_email}</a></p>
+
+            <div className="right">
+                <div >
+                    <h3>Tutoring Schedule</h3>
+                    <div className="item">
+                        <div className="spacing">{student.day?.day}s</div>
+                        <div className="spacing">{student.start_time} - {student.end_time}</div>
+                    </div>
+                </div>
+                <div className="item">
+                    <div className="spacing">Tutor(s):</div>
+                    <div className="item">
+                        {
+                            student.tutors?.map(pair => {
+                                return <div className="spacing" key={pair.id}>
+                                    <Link to={`/tutor/${pair.tutor.id}`}>{pair.tutor.user?.first_name} {pair.tutor.user?.last_name}</Link>
+                                </div>
+                            })
+                        }
+                    </div>
+                </div>
             </div>
 
-            {user ? <Button onClick={toggleForm}>Edit Profile</Button> : ""}
+
+            <div className="stack">
+                <div className="photo">
+                    <img src={student.id % 2 === 0 ? Girl : Boy} alt="profile photo" className="student-photo" />
+                </div>
+
+            </div>
+
 
         </div>
 
         <div className="section">
             {
                 student.scores?.length
-                    ? <>
+                    ? <div className="scores">
+                    <h2>ACT Scores</h2>
                         <ScoresTable thisStudent={student} newInfo={newInfo} />
                         <div className="item space-between">
                             <Button onClick={() => {
@@ -119,7 +144,7 @@ export const StudentProfile = ({ user, thisStudent }) => {
                             }}>View All Scores</Button>
                             <Button onClick={toggleScoreForm}>Add Score(s) +</Button>
                         </div>
-                    </>
+                    </div>
                     : <div>
 
                         <Button onClick={toggleScoreForm}>Add Score(s) +</Button>

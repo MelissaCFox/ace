@@ -32,7 +32,7 @@ export const ApplicationViews = () => {
 
             <Route exact path="/" render={() => {
                 if (currentUser.user?.is_superuser) {
-                    return <AdminHome />
+                    return <StudentManager currentUser={currentUser} home={true}/>
                 } else if (currentUser.user?.is_staff) {
                     return <Today user={currentUser} />
                 } else if (currentUser.user) {
@@ -63,9 +63,6 @@ export const ApplicationViews = () => {
                         : <>
                             <Route path="/students">
                                 <StudentList user={currentUser} />
-                            </Route>
-                            <Route path="/schedule">
-                                <Schedule user={currentUser} />
                             </Route>
                             <Route path="/profile">
                                 <TutorProfile currentUser={currentUser} />

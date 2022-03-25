@@ -34,19 +34,19 @@ export const TestManager = () => {
     }
 
     return (<>
-        <div className="container">
+        <div className="container stack">
 
-            <Button onClick={toggleForm}>Add New Test</Button>
+            <Button onClick={toggleForm}>New Test</Button>
 
-            <div className="tests">
+            <div className="tests stack">
                 {
                     tests.map((test) => {
-                        return <div key={test.id}>
-                            {test.name} ({test.year})
-                            <button><Delete onClick={() => {
+                        return <div className="spacing" key={test.id}>
+                            <Button><Delete className="trash-icon" onClick={() => {
                                 setTestId(test.id)
                                 toggleConfirm()
-                            }} /></button>
+                            }} /></Button>
+                            {test.name} ({test.year})
                         </div>
                     })
                 }

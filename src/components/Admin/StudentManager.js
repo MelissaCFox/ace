@@ -1,17 +1,19 @@
-import { Button } from '@material-ui/core';
 import { Settings } from '@material-ui/icons';
 import React, { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
 import UserRepository from "../../repositories/UserRepository"
 import { StudentForm } from '../Forms/StudentForm';
 import { Modal, ModalBody, ModalHeader } from 'reactstrap';
+import { useHistory } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 
-export const StudentManager = ({currentUser}) => {
+export const StudentManager = ({ currentUser, home }) => {
     const [allStudents, setAllStudents] = useState([])
     const [students, setStudents] = useState([])
     const [tutors, setTutors] = useState([])
     const [pairs, setPairs] = useState([])
     const [filter, setFilter] = useState("")
+    const history = useHistory()
+    const [message, setMessage] = useState("")
 
     const [form, setForm] = useState(false)
     const toggleForm = () => setForm(!form)
@@ -26,17 +28,30 @@ export const StudentManager = ({currentUser}) => {
             setAllStudents(r)
             if (filter) {
                 filterStudents(r)
+            } else if (home){
+                setFilter("unassigned")
+                let unassigned = r.filter(student => student.unassigned)
+                setStudents(unassigned)
+                if (unassigned.length < 1) {
+                    setMessage("There Are Currently No Unassigned Students")
+                }
             } else {
                 setStudents(r)
             }
         })
         UserRepository.getTutors().then((r) => setTutors(r.filter(tutor => !tutor.user.is_superuser)))
         UserRepository.getPairs().then(setPairs)
-    }, [newInfo])
+    }, [newInfo, home])
 
     useEffect(() => {
         filterStudents()
-    },[filter])
+    }, [filter])
+
+    useEffect(() => {
+        if (filter === "unassigned" && students?.length > 0) {
+            setMessage("There Are Currently No Unassigned Students")
+        }
+    },[students, filter])
 
     const filterStudents = (response) => {
         let students = []
@@ -76,18 +91,18 @@ export const StudentManager = ({currentUser}) => {
     }
 
     return (<>
-        <div className="container">
+        <div className="container stack">
 
             <Button onClick={() => {
                 setStudentToEdit({})
                 toggleForm()
-                }}>Register New Student</Button>
+            }}>Register New Student</Button>
 
-            <select onChange={(e) => {
+            <select className="select-filter" onChange={(e) => {
                 setFilter(e.target.value)
-                }}
+            }}
                 value={filter}>
-                <option value="">All</option>
+                <option value="">All Students</option>
                 <option value="assigned">Assigned</option>
                 <option value="unassigned">Unassigned</option>
                 <option value="active">Active</option>
@@ -97,22 +112,35 @@ export const StudentManager = ({currentUser}) => {
 
             <div className="students">
                 {
-                    students.map((student) => {
-                        return <div key={student.id}>
-                            <Link to={`student/${student.id}`}>{student.user.first_name}</Link> {student.unassigned ? " - NOT ASSIGNED" : ""}
-                            <button><Settings onClick={() => {
-                                setStudentToEdit(student)
-                                toggleForm()
-                            }} /></button>
-                            <select defaultValue={student.tutor_id} onChange={e => assignTutor(student.id, e.target.value)}>
-                                <option value="0">Assign Tutor</option>
-                                {
-                                    tutors.map(tutor => <option key={tutor.id} value={tutor.id}>{tutor.user?.firstName} {tutor.user?.last_name}</option>)
-                                }
-                            </select>
+                    students?.length > 0
+                        ? <>
+                            {
+                                students.map((student) => {
+                                    return <div className="item spacing" key={student.id}>
+                                        <Button><Settings onClick={() => {
+                                            setStudentToEdit(student)
+                                            toggleForm()
+                                        }} /></Button>
+                                        <Button className={student.user?.is_active ? "full-name-btn active" : "full-name-btn inactive"}
+                                            onClick={() => { history.push(`/student/${student.id}`) }}>{student.user?.first_name} {student.user?.last_name}</Button>
+                                        <select
+                                            className="spacing"
+                                            defaultValue={student.tutor_id}
+                                            onChange={e => assignTutor(student.id, e.target.value)}>
+                                            <option value="0">Assign Tutor</option>
+                                            {
+                                                tutors.map(tutor => <option key={tutor.id} value={tutor.id}>{tutor.user?.firstName} {tutor.user?.last_name}</option>)
+                                            }
+                                        </select>
+                                    </div>
+                                })
+                            }
+                        </>
+                        : <div>
+                            <h3>{message}</h3>
                         </div>
-                    })
                 }
+
             </div>
 
             <Modal animation="false"
@@ -123,7 +151,7 @@ export const StudentManager = ({currentUser}) => {
                 isOpen={form}>
                 <ModalHeader>{studentToEdit?.user?.first_name ? `${studentToEdit?.user?.first_name} ${studentToEdit?.user?.last_name}` : "Add Student"}</ModalHeader>
                 <ModalBody>
-                    <StudentForm edit={studentToEdit} alertNewInfo={alertNewInfo} toggleForm={toggleForm} currentUser={currentUser}/>
+                    <StudentForm edit={studentToEdit} alertNewInfo={alertNewInfo} toggleForm={toggleForm} currentUser={currentUser} />
                 </ModalBody>
             </Modal>
 

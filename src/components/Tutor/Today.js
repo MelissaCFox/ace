@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { useHistory } from "react-router-dom"
-import { Input } from "reactstrap"
+import { Button, Input } from "reactstrap"
 import UserRepository from "../../repositories/UserRepository"
 
 
@@ -10,6 +10,7 @@ export const Today = ({ user }) => {
     const [students, setStudents] = useState([])
     const [newInfo, setNewInfo] = useState(false)
     const alertNewInfo = () => setNewInfo(!newInfo)
+    const history = useHistory()
 
     useEffect(() => {
         UserRepository.getStudents().then((r) => {
@@ -40,7 +41,7 @@ export const Today = ({ user }) => {
     return (<>
         <div className="">
             <div className="item">
-                <h2>Students on the Schedule</h2>
+                <h2>Today's Minds to Mold</h2>
                 <Input type="date" onChange={changeDate} />
             </div>
 
@@ -50,8 +51,14 @@ export const Today = ({ user }) => {
                         let startTime = student.start_time.slice(0, -3)
                         let endTime = student.end_time.slice(0, -3)
                         return <div className="single-student item" key={student.id}>
+                            <Button outline color="success"
+                                onClick={() => {history.push(`/student/${student.id}`)}}
+                            >
+                                <div className="item long-btn">
                             <div className="flex-one">{startTime}-{endTime}</div>
-                            <Link className="flex-six" to={`/student/${student.id}`}> {student.user?.first_name} {student.user?.last_name} </Link>
+                            <div className="flex-one">{student.user?.first_name} {student.user?.last_name}</div>
+                                </div>
+                            </Button>
 
                         </div>
                     })

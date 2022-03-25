@@ -17,7 +17,7 @@ input[name="remember"] {
 
 .link--register {
     margin-top: 2rem;
-    color:#ECDBBA; 
+    color:rgb(51, 120, 138); 
 
 }
 
@@ -27,7 +27,7 @@ input[name="remember"] {
     flex-wrap: wrap;
     flex-direction: row;
     margin-top: -5rem;
-    color:#ECDBBA; 
+    color:rgb(51, 120, 138); 
     font-family: "Readex Pro"
 }
 
